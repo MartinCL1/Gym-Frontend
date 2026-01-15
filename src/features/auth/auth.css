@@ -12,8 +12,8 @@
   overflow: hidden;
   height: 50%;
   -webkit-box-shadow: 0px 0px 20px 5px #575757cc;
-  box-shadow: 0px 0px 20px 5px #575757cc;
-  border: 1px solid rgba(54, 54, 54, 0.575);
+  box-shadow: 0px 0px 20px 5px #5757579f;
+  border: 1px solid #5757579f;
   border-radius: 4px;
   align-items: center;
 }
@@ -39,7 +39,7 @@
   margin-top: 1em;
 }
 
-.login-form--content span:not(button span) {
+.login-form--content span:not(a span) {
   color: #2b2b2be5;
   margin-bottom: 1em;
 }

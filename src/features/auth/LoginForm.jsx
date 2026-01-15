@@ -1,8 +1,8 @@
 import { useState } from "react";
 import "./auth.css";
 import { EyeOff, Eye, LogIn } from "lucide-react";
-import Boton from "../../components/ui/Boton";
-import { AnimatePresence, easeInOut, motion } from "motion/react";
+import Boton from "../../shared/ui/Boton";
+import { AnimatePresence, motion } from "motion/react";
 
 const LoginForm = () => {
   const [visiblePassword, setVisiblePassword] = useState({
@@ -68,7 +68,7 @@ const LoginForm = () => {
                   )}
                 </div>
                 <div className="login-options flex-center">
-                  <Boton Icon={LogIn} text={"Ingresar"} />
+                  <Boton Icon={LogIn} path={"/memberSection"} text={"Ingresar"} />
                   <button
                     onClick={switchToSignUp}
                     className="login-options--register"
