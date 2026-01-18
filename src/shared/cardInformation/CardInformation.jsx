@@ -1,7 +1,11 @@
 import { Bookmark, Heart, MessageSquare } from "lucide-react";
 import "../share.ui.css";
+import BotonIcono from "../ui/BotonIcono";
 
 const CardInformation = ({ data }) => {
+
+
+
   return (
     <div className="card-information-wrapper">
       <div className="card-image">
@@ -14,16 +18,9 @@ const CardInformation = ({ data }) => {
           <div>
           <p>{data.descripcion}</p>
           <div className="card-information-icons">
-            <div className="flex-center">
-              <Heart />
-              <span>{data.likes}</span>
-            </div>
-            <div className="flex-center">
-              <MessageSquare /> {data.comments}
-            </div>
-            <div className="flex-center">
-              <Bookmark />
-            </div>
+            <BotonIcono Icono={Heart} text={data.likes} estilos={"like"} />
+            <BotonIcono Icono={MessageSquare} text={data.comments} />
+            <BotonIcono Icono={Bookmark} estilos={"bookmark"} />
           </div>
           </div>
         </div>

@@ -9,13 +9,8 @@
   gap: 14px;
 } */
 
-.member-wrapper-dashboard {
-  position: absolute;
-  bottom: 0;
-  height: 40%;
-  width: 100%;
-}
 
+/* RECORDAD CAMBIAR EL NOMBRE DE VARIABLES */
 .member-wrapper-profile {
   display: flex;
   flex-direction: column;
@@ -26,6 +21,14 @@
   background-color: #070707;
   border-top: none;
   overflow: hidden;
+  padding-top: 30px;
+}
+
+.member-wrapper-dashboard {
+  position: absolute;
+  bottom: 0;
+  height: 40%;
+  width: 100%;
 }
 
 .member-wrapper-options {

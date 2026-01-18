@@ -105,3 +105,15 @@
     text-align: center;
   }
 }
+
+.like {
+  fill: red;
+  stroke: red;
+}
+
+.bookmark {
+  fill: #fff;
+  stroke: #fff;
+  /* fill: rgb(245, 245, 35);
+  stroke: rgb(245, 245, 35); */
+}
