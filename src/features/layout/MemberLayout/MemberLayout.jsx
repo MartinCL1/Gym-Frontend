@@ -80,7 +80,7 @@ const MemberLayout = () => {
           <CardInformation key={index} data={data} />
         ))}
       </div>
-
+      
       <Profile pressed={show} />
     </div>
   );
