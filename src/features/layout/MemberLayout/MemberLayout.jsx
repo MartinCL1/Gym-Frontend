@@ -1,15 +1,7 @@
 import "./member.css";
-import MenuBoton from "../../../shared/ui/MenuBoton";
-import { useState } from "react";
 import CardInformation from "../../../shared/cardInformation/CardInformation";
-import Profile from "../../../shared/profile/Profile";
 
 const MemberLayout = () => {
-  const [show, setShow] = useState(false);
-
-  const accion = () => {
-    setShow(!show);
-  };
 
   const cardData = [
     {
@@ -72,8 +64,6 @@ const MemberLayout = () => {
 
   return (
     <div className="member-wrapper">
-      <MenuBoton accion={accion} />
-
       <div className="member-wrapper-content">
         {/* Aqui colocamos la info de las demas personas como lo que han publicado*/}
         {cardData.map((data, index) => (
@@ -81,7 +71,6 @@ const MemberLayout = () => {
         ))}
       </div>
       
-      <Profile pressed={show} />
     </div>
   );
 };

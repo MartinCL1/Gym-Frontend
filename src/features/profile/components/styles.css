@@ -3,10 +3,15 @@
   padding: 8px;
   min-width: 250px;
   height: max-content;
-  border-bottom: 1px solid #2a2c2e;
   gap: 12px;
   color: white;
   flex-direction: column;
+}
+
+hr {
+  width: 80%;
+  max-width: 300px;
+  margin: auto;
 }
 
 .profile-avatar {
@@ -35,17 +40,20 @@
 
 .perfil {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  grid-template-columns: repeat(5, 1fr);  
   width: 100%;
   height: 100vh;
-  padding: 16px;
+  padding: 54px 25px;
+  overflow: scroll;
+  grid-column: 1 / 5;
 }
 
 .perfil-wrapper {
-  grid-column: 1 / 3;
+  grid-column: 1 / 6;
   display: flex;
   flex-direction: column;
-  background-color: #0c0c0cf1;
+  background-color: #0b0b0b54;
   width: 100%;
   height: 200px;
   box-shadow: 3px 5px 3px #00000091;
@@ -72,7 +80,7 @@
 }
 
 .perfil-banner-informacion {
-  padding: 16px;
+  padding: 24px 16px;
   color: white;
   width: 100%;
 }
@@ -118,13 +126,120 @@
   margin: 0;
 }
 
-/* */
+/* Estilos para el componente lista de amigos*/
+.lista-amigos {
+  grid-column: 1 / 3;
+  display: flex;
+  flex-direction: column;
+  gap: 12px; 
+  width: 100%;
+  color: white;
+  text-shadow: 2px 2px 1px black;
+}
+
+.lista-amigos h2 {
+  text-align: center;   
+}
+
+/* Estilos de la tarjeta amigo */
+.tarjeta-amigo {
+  display: flex;
+  width: 100%;
+  gap: 12px;
+  background-color: #0b0b0b54;
+  align-items: center;
+  box-shadow: 1px 2px 4px black;
+  border: 1px solid #20202071;
+  border-radius: 5px;
+  padding: 8px;
+}
+
+.tarjeta-amigo h3 {
+  font-weight: 400;
+  color: #ccc;
+}
+
+.mas-amigos {
+  cursor: pointer;
+  width: 100%;
+  gap: 5px;
+  border-radius: 5px;
+}
+
+.tarjeta-amigo img {
+  width: 15%;
+  min-width: 35px;
+  object-fit: 1 / 1;
+  border-radius: 5px;
+}
+
+.tarjeta-amigo-descripcion {
+  flex-grow: 1;
+  height: 100%;
+}
+
+.tarjeta-amigo-descripcion p {
+  font-size: clamp(12px, 1vw, 16px);
+}
+
+.dashboard {
+  grid-column: 3 / 6;
+  height: 100%;
+}
+
+
+.dashboard-container {
+  width: 100%;
+  height: 200px;
+  color: white;
+}
+
+.dashboard-container h2 {
+  font-weight: 400;
+  text-align: center;
+}
+
+@media (width < 1024px) {
+  .lista-amigos {
+    grid-column: 1 / 6;
+  }
+
+  .dashboard {
+    grid-column: 1 / 6;
+  }
+
+  .mas-amigos {
+    max-width: 300px;
+    width: 90%;
+    margin: auto;
+  }
+  
+}
 
 @media (width < 700px) {
+  .perfil {
+    grid-column: 1 / 6;
+  }
+
+  .dashboard {
+    grid-column: 1 / 6;
+  }
+
   .perfil-wrapper {
     width: 100%;
     max-width: none;
-    grid-column: 1 / 4;
+    grid-column: 1 / 6;
   }
+  
+  .lista-amigos {
+    grid-column: 1 / 6;
+    height: 50vh;
+  }
+
+  .opciones.opciones-tarjeta-amigo {
+    width: 50%;
+    min-width: 150px;
+  }
+
 }
 

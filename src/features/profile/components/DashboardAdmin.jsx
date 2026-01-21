@@ -1,6 +1,4 @@
-import { color } from "motion";
-import { useEffect } from "react";
-import { Area, AreaChart, Legend, Tooltip, XAxis, YAxis } from "recharts";
+import { Area, AreaChart, Tooltip, XAxis, YAxis } from "recharts";
 
 const DashboardAdmin = () => {
   const data01 = [
@@ -24,7 +22,6 @@ const DashboardAdmin = () => {
         width: "100%",
         height: "100%",
         position: "relative",
-        minWidth: "100px",
       }}
     >
       <AreaChart
@@ -36,12 +33,12 @@ const DashboardAdmin = () => {
         <defs>
           <linearGradient id="lineGradient" x1="0" y1="0" x2="1" y2="0">
             <stop offset="0%" stopColor="#202020" />
-            <stop offset="40%" stopColor="#5c5c5c" />
-            <stop offset="100%" stopColor="#ffffff" />
+            <stop offset="40%" stopColor="#5c5c5cd7" />
+            <stop offset="100%" stopColor="#ffffffda" />
           </linearGradient>
 
           <linearGradient id="areaGradient" amplitude={10}>
-            <stop offset="100%" stopColor="#fcfcfc2f" />
+            <stop offset="100%" stopColor="#fcfcfc0a" />
           </linearGradient>
         </defs>
         <defs>
@@ -57,7 +54,7 @@ const DashboardAdmin = () => {
         </defs>
 
         <XAxis xAxisId={"ageId"} dataKey={"value"} stroke="#6464645e"  />
-        <YAxis />
+        <YAxis hide />
         <Area
           fill="url(#areaGradient)"
           stroke="url(#lineGradient)"

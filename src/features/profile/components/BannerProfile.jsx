@@ -14,7 +14,8 @@ const BannerProfile = ({ username = "Martin W. Cox", role = "Member" }) => {
         <span>{username}</span>
         <p>{role}</p>
       </div>
-      <Boton path={"perfil"} text={"Ver Perfil"} />
+      <Boton path={"memberSection/perfil"} text={"Ver Perfil"} />
+      <hr />
     </div>
   );
 };

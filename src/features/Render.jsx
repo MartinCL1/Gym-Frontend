@@ -1,16 +1,20 @@
 import { Outlet } from "react-router-dom";
+import "./render.css";
+import { useState } from "react";
+import Profile from "../shared/profile/Profile";
+import MenuBoton from "../shared/ui/MenuBoton";
 
 const Render = () => {
-  const estilos = {
-    height: "100vh",
-    width: "100vw",
-    backgroundColor: "#070707",
-    overflow: "hidden",
-  };
+  const [show, setShow] = useState(false);
 
+  const accion = () => {
+    setShow(!show);
+  };
   return (
-    <div style={estilos}>
+    <div className="principal">
+      <MenuBoton accion={accion} />
       <Outlet />
+      <Profile pressed={show} />
     </div>
   );
 };
