@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./alimentacion.css";
+import ModalAlimentacion from "./ModalAlimentacion/ModalAlimentacion";
 
 const Alimentacion = () => {
   const [filtro, setFiltrar] = useState([])
@@ -12,8 +13,8 @@ const Alimentacion = () => {
         "Déficit calórico moderado enfocado en conservar masa muscular.",
       macros: {
         proteina: "alta",
-        carbohidratos: "media_baja",
-        grasas: "media_baja",
+        carbohidratos: "Media baja",
+        grasas: "Media baja",
       },
       recomendaciones: [
         "Prioriza alimentos saciantes",
@@ -36,9 +37,9 @@ const Alimentacion = () => {
       objetivo: "Ganar masa muscular",
       descripcion: "Superávit calórico enfocado en el crecimiento muscular.",
       macros: {
-        proteina: "alta",
-        carbohidratos: "alta",
-        grasas: "media",
+        proteina: "Alta",
+        carbohidratos: "Alta",
+        grasas: "Media",
       },
       recomendaciones: [
         "No saltarse comidas",
@@ -62,9 +63,9 @@ const Alimentacion = () => {
       objetivo: "Mantenimiento",
       descripcion: "Equilibrio entre las calorías consumidas y gastadas.",
       macros: {
-        proteina: "media_alta",
-        carbohidratos: "media",
-        grasas: "media",
+        proteina: "Media alta",
+        carbohidratos: "Media",
+        grasas: "Media",
       },
       recomendaciones: [
         "Mantén hábitos sostenibles",
@@ -95,6 +96,7 @@ const Alimentacion = () => {
             ))
         }
       </div>
+      <ModalAlimentacion alimentacion={alimentacion[0]} />
     </section>
   );
 };
@@ -120,7 +122,7 @@ const AlimentacionCards = ({ planAlimenticio }) => {
             <div className="tarjeta-informacion">
                 <span>Descripcion: </span>
                 <p>
-                    { planAlimenticio.descripcion }
+                    {planAlimenticio.descripcion}
                 </p>
             </div>
         </div>

@@ -47,6 +47,7 @@
     display: flex;
     justify-content: center;
     height: 300px;
+    cursor: pointer;
 }
 
 .tarjeta-alimentacion img {
@@ -68,6 +69,7 @@
     overflow: scroll;
     box-shadow: 4px 4px 0px 2px #fff;
     padding: 8px 12px;
+    pointer-events: none;
 }
 
 .tarjeta-informacion span {
@@ -76,4 +78,68 @@
 
 .tarjeta-informacion p {
     padding: 5px 0px;
+}
+
+
+/* Estilos del Modal Alimentacion */
+
+.modal-alimentacion {
+    position: fixed;
+    top: 0;
+    z-index: 1000000000;
+    height: 100%;
+    background-color: #000000c0;
+    width: 100%;
+}
+
+.close-modal {
+    position: absolute;
+    right: 3%;
+    top: 3%;
+    cursor: pointer;
+}
+
+.modal-alimentacion-contenido {
+    width: 80%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 400px;
+    background-color: black;
+    border: 1px solid white;
+    height: 60%;
+    border-radius: 5px;
+    font-size: clamp(14px, 1vw, 16px);
+}
+
+.modal-alimentacion-titulo {
+    position: absolute;
+    bottom: 100%;
+    width: 90%;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    background-color: black;
+    border-top: 1px solid white;
+    border-left: 1px solid white;
+    border-right: 1px solid white;
+    border-radius: 5px 5px 0 0;
+}
+
+.modal-alimentacion-titulo h2 {
+    padding: 4px;
+}
+
+.alimentacion-contenido-titulo {
+    font-weight: 600;
+    color: rgb(230, 123, 52);
+    margin-bottom: 15px;
+}
+
+.alimentacion-contenido-wrapper {
+    width: 100%;
+    height: 100%;
+    padding: 40px 20px;
+    overflow: scroll;
 }
