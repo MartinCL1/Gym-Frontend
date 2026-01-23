@@ -1,14 +1,11 @@
 import { X } from "lucide-react";
 import "../alimentacion.css";
 
-const ModalAlimentacion = ({ alimentacion }) => {
-  const cerrarModal = () => {
-    console.log("Holas");
-  };
+const ModalAlimentacion = ({ alimentacion, accion }) => {
 
   return (
     <div className="modal-alimentacion flex-center">
-      <X onClick={cerrarModal} className="close-modal" width={29} height={29} />
+      <X onClick={accion} className="close-modal" width={29} height={29} />
       <div className="modal-alimentacion-contenido">
         <div className="modal-alimentacion-titulo">
           <h2>{alimentacion.objetivo}</h2>
@@ -30,7 +27,6 @@ const ModalAlimentacion = ({ alimentacion }) => {
             </div>
           ))}
 
-          
           <span className="alimentacion-contenido-titulo">
             Recomendaciones:{" "}
           </span>
