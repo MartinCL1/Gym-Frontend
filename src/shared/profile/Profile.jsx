@@ -24,7 +24,7 @@ const Profile = ({ pressed }) => {
       <div className="member-wrapper-options">
         <Link className="member-wrapper-option">Inicio</Link>
         <Link className="member-wrapper-option">Mi Progreso</Link>
-        <Link className="member-wrapper-option">Plan de alimentacion</Link>
+        <Link className="member-wrapper-option" to={'memberSection/alimentacion'}>Plan de alimentacion</Link>
         <Link className="member-wrapper-option">Miembros</Link>
         <Link className="member-wrapper-option">Rutinas</Link>
         <Link className="member-wrapper-option">Cerrar Sesion</Link>

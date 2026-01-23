@@ -1,0 +1,79 @@
+.alimentacion {
+    overflow: scroll;
+}
+
+.alimentacion-objetivos {
+    display: flex;
+    max-width: 800px;
+    width: 90%;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: auto;
+}
+
+.alimentacion-objetivos .boton-seleccion {
+    flex-grow: 1;
+    padding: 8px;
+    border-radius: 5px;
+    background-color: transparent;
+    color: white;
+    border: 1px solid #cccccc4b;
+    font-size: clamp(12px, 1vw, 16px);
+}
+
+.alimentacion-objetivos .boton-seleccion.seleccionado {
+    background-color: black;
+    border: 1px solid #ccc;
+}
+
+/*  ESTILOS PLAN DE ALIMENTACION  */
+
+.alimentacion-tarjetas {
+    display: flex;
+    gap: 12px;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    overflow: scroll;
+}
+
+.tarjeta-alimentacion {
+    position: relative;
+    border-radius: 5px 5px 0 0;
+    margin: 5% 0;
+    width: 90%;
+    max-width: 250px;
+    display: flex;
+    justify-content: center;
+    height: 300px;
+}
+
+.tarjeta-alimentacion img {
+    box-shadow: 4px -4px 0px 5px rgb(255, 255, 255);
+    height: 50%;
+    object-fit: cover;
+    border-radius: inherit;
+    width: 100%;
+}
+
+.tarjeta-informacion {
+    position: absolute;
+    height: 50%;
+    width: calc(100% + 20px);
+    border: 1px solid rgba(255, 255, 255, 0.336);
+    bottom: 0;
+    border-radius: 0 0 4px 4px;
+    background-color: #29292907;
+    overflow: scroll;
+    box-shadow: 4px 4px 0px 2px #fff;
+    padding: 8px 12px;
+}
+
+.tarjeta-informacion span {
+    font-weight: 600;
+}
+
+.tarjeta-informacion p {
+    padding: 5px 0px;
+}

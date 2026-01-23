@@ -40,3 +40,17 @@ button {
 html::-webkit-scrollbar {
   display: none;
 }
+
+.contenedor {
+  width: 100%;
+  height: 100%;
+  color: white;
+  grid-column: 1 / 5;
+  padding: 54px 16px;
+}
+
+@media (width < 740px) {
+  .contenedor {
+    grid-column: 1 / 6;
+  }
+}

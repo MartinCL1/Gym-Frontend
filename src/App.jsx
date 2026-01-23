@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import MemberLayout from "./features/layout/MemberLayout/MemberLayout";
 import Render from "./features/Render";
 import Perfil from "./features/profile/Perfil";
+import Alimentacion from "./features/pages/alimentacion/Alimentacion";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path="/memberSection" >
             <Route index element={<MemberLayout />} />
             <Route element={<Perfil />} path="perfil" />
+            <Route element={<Alimentacion />} path="alimentacion" />
           </Route>
         </Route>
       </Routes>

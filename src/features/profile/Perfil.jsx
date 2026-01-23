@@ -46,7 +46,7 @@ const Dashboard = () => {
   return (
     <div className="dashboard" >
       <div className="dashboard-container">
-        <h2>Asistencia.</h2>
+        <h2>Asistencia</h2>
         <DashboardAdmin />
       </div>
     </div>

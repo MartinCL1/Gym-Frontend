@@ -17,65 +17,70 @@ const DashboardAdmin = () => {
   ];
 
   return (
-    <div
-      style={{
-        width: "100%",
-        height: "100%",
-        position: "relative",
-      }}
-    >
-      <AreaChart
-        data={data01}
-        width={"100%"}
-        height={"100%"}
-        margin={{ top: 10, right: 0, left: 0 }}
-      >
-        <defs>
-          <linearGradient id="lineGradient" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stopColor="#202020" />
-            <stop offset="40%" stopColor="#5c5c5cd7" />
-            <stop offset="100%" stopColor="#ffffffda" />
-          </linearGradient>
+    // <div
+    //   style={{
+    //     width: "100%",
+    //     height: "100%",
+    //     position: "relative",
+    //   }}
+    // >
+    //   <AreaChart
+    //     data={data01}
+    //     width={"100%"}
+    //     height={"100%"}
+    //     margin={{ top: 10, right: 0, left: 0 }}
+    //   >
+    //     <defs>
+    //       <linearGradient id="lineGradient" x1="0" y1="0" x2="1" y2="0">
+    //         <stop offset="0%" stopColor="#202020" />
+    //         <stop offset="40%" stopColor="#5c5c5cd7" />
+    //         <stop offset="100%" stopColor="#ffffffda" />
+    //       </linearGradient>
 
-          <linearGradient id="areaGradient" amplitude={10}>
-            <stop offset="100%" stopColor="#fcfcfc0a" />
-          </linearGradient>
-        </defs>
-        <defs>
-          <filter id="lineShadow" x="-50%" y="-50%" width="200%" height="200%">
-            <feDropShadow
-              dx="0"
-              dy="0"
-              stdDeviation="6"
-              floodColor="#7c3aed"
-              floodOpacity="1"
-            />
-          </filter>
-        </defs>
+    //       <linearGradient id="areaGradient" amplitude={10}>
+    //         <stop offset="100%" stopColor="#fcfcfc0a" />
+    //       </linearGradient>
+    //     </defs>
+    //     <defs>
+    //       <filter id="lineShadow" x="-50%" y="-50%" width="200%" height="200%">
+    //         <feDropShadow
+    //           dx="0"
+    //           dy="0"
+    //           stdDeviation="6"
+    //           floodColor="#7c3aed"
+    //           floodOpacity="1"
+    //         />
+    //       </filter>
+    //     </defs>
 
-        <XAxis xAxisId={"ageId"} dataKey={"value"} stroke="#6464645e"  />
-        <YAxis hide />
-        <Area
-          fill="url(#areaGradient)"
-          stroke="url(#lineGradient)"
-          type="basis"
-          activeDot={{ stroke: "gray", r: 2 }}
-          dataKey="value"
-        />
+    //     <XAxis xAxisId={"ageId"} dataKey={"value"} stroke="#6464645e"  />
+    //     <YAxis hide />
+    //     <Area
+    //       fill="url(#areaGradient)"
+    //       stroke="url(#lineGradient)"
+    //       type="basis"
+    //       activeDot={{ stroke: "gray", r: 2 }}
+    //       dataKey="value"
+    //     />
 
-        <Area
-          type="basis"
-          dataKey="age"
-          fill="url(#areaGradient)"
-          stroke="url(#lineGradient)"
-          activeDot={{ stroke: "gray", r: 2 }}
-        />
+    //     <Area
+    //       type="basis"
+    //       dataKey="age"
+    //       fill="url(#areaGradient)"
+    //       stroke="url(#lineGradient)"
+    //       activeDot={{ stroke: "gray", r: 2 }}
+    //     />
 
-        {/* <Tooltip contentStyle={{color: "black", textTransform: "capitalize"}} /> */}
-        <Tooltip content={MiTooltip} />
-      </AreaChart>
+    //     {/* <Tooltip contentStyle={{color: "black", textTransform: "capitalize"}} /> */}
+    //     <Tooltip content={MiTooltip} />
+    //   </AreaChart>
+    // </div>
+  // );
+    <div className="dashboard">
+      
     </div>
-  );
+  )
+
 };
 
 const MiTooltip = ({ active, payload, label }) => {
