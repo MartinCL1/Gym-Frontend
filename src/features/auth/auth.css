@@ -8,16 +8,14 @@
   position: relative;
   display: flex;
   width: 90%;
-  max-width: 800px;
+  max-width: 700px;
   min-height: 350px;
   overflow: hidden;
   height: 50%;
-  -webkit-box-shadow: 0px 0px 0px 1px #ccc;
   box-shadow: 0px 0px 0px 1px #ccc;
-
-  border: 5px double white;
   border-radius: 4px;
   align-items: center;
+
 }
 
 .login-form--content-form {
@@ -121,7 +119,7 @@
 
 @media (width < 600px) {
   .login-form--content {
-    max-width: 350px;
+    max-width: 325px;
   }
   .wrapper-login {
     position: static;
