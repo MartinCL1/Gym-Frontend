@@ -121,9 +121,11 @@
   .login-form--content {
     max-width: 325px;
   }
+
   .wrapper-login {
     position: static;
   }
+  
   .login-cover--register {
     display: none;
   }

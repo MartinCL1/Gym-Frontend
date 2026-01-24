@@ -13,7 +13,7 @@ const Profile = ({ pressed }) => {
     setProfileSize(size);
     console.log(pressed)
   }, [pressed]);
-
+ 
   return (
     <div
       className={`member-wrapper-profile`}
@@ -22,7 +22,7 @@ const Profile = ({ pressed }) => {
     >
       <BannerProfile />
       <div className="member-wrapper-options">
-        <Link className="member-wrapper-option">Inicio</Link>
+        <Link className="member-wrapper-option" to={"memberSection"}>Inicio</Link>
         <Link className="member-wrapper-option">Mi Progreso</Link>
         <Link className="member-wrapper-option" to={'memberSection/alimentacion'}>Plan de alimentacion</Link>
         <Link className="member-wrapper-option">Miembros</Link>

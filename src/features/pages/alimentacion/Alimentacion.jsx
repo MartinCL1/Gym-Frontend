@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./alimentacion.css";
 import ModalAlimentacion from "./ModalAlimentacion/ModalAlimentacion";
 
 const Alimentacion = () => {
-  const [filtro, setFiltrar] = useState([]);
+  const [filtro, setFiltro] = useState([]);
   const [alimentoSeleccionado, setAlimentoSeleccionado] = useState(null);
 
   const editarAlimento = (alimento) => {
@@ -12,8 +12,9 @@ const Alimentacion = () => {
 
   const closeModal = () => {
     setAlimentoSeleccionado(null);
-  }
+  };
 
+  // Este array contiene los planes de alimentacion.
   const alimentacion = [
     {
       id: 1,
@@ -90,31 +91,58 @@ const Alimentacion = () => {
     },
   ];
 
+  const [copiaAlimentacion, setCopiaAlimentacion] = useState([])
+
+  const filtrarAlimentacion = (plan) => {
+    if (filtro.includes(plan)) {
+      setFiltro(filtro.filter((item) => item !== plan));
+    }else {
+      setFiltro([...filtro, plan]);
+    }
+  };
+
+  useEffect(() => {
+    if (filtro.length === 0) {
+      setCopiaAlimentacion([...alimentacion])
+      return;
+    }
+    setCopiaAlimentacion(alimentacion.filter(item => filtro.includes(item.objetivo)))
+  }, [filtro])
+
+
   return (
     <section className="contenedor alimentacion">
       <div className="alimentacion-objetivos">
-        <BotonSelector text={"Bajar Grasa"} />
-        <BotonSelector text={"Ganar masa muscular"} />
-        <BotonSelector text={"Mantenimiento"} />
+        <BotonSelector agregarFiltro={filtrarAlimentacion} text={"Bajar grasa"} />
+        <BotonSelector agregarFiltro={filtrarAlimentacion} text={"Ganar masa muscular"} />
+        <BotonSelector agregarFiltro={filtrarAlimentacion} text={"Mantenimiento"} />
       </div>
 
       <div className="alimentacion-tarjetas">
-        {alimentacion.map((alimento) => (
-          <AlimentacionCards planAlimenticio={alimento} accion={editarAlimento} />
+        {copiaAlimentacion.map((alimento) => (
+          <AlimentacionCards
+            key={alimento.id}
+            planAlimenticio={alimento}
+            accion={editarAlimento}
+          />
         ))}
       </div>
       {alimentoSeleccionado && (
-        <ModalAlimentacion alimentacion={alimentoSeleccionado} accion={closeModal} />
+        <ModalAlimentacion
+          alimentacion={alimentoSeleccionado}
+          accion={closeModal}
+        />
       )}
     </section>
   );
 };
 
-const BotonSelector = ({ text }) => {
+const BotonSelector = ({ text, agregarFiltro }) => {
   const [seleccionado, setSeleccionado] = useState(false);
 
   const seleccionar = () => {
     setSeleccionado(!seleccionado);
+    agregarFiltro(text)
   };
 
   return (
