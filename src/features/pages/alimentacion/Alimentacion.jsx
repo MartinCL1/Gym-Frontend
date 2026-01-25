@@ -1,18 +1,24 @@
 import { useEffect, useState } from "react";
 import "./alimentacion.css";
 import ModalAlimentacion from "./ModalAlimentacion/ModalAlimentacion";
+import { Plus, X } from "lucide-react";
 
 const Alimentacion = () => {
   const [filtro, setFiltro] = useState([]);
   const [alimentoSeleccionado, setAlimentoSeleccionado] = useState(null);
+  const [esModalAgregarAlimentacionVisible, setModalAgregarAlimentacionVisible] = useState(false);
 
   const editarAlimento = (alimento) => {
     setAlimentoSeleccionado(alimento);
   };
 
-  const closeModal = () => {
+  const closeModalAlimentacion = () => {
     setAlimentoSeleccionado(null);
   };
+
+  const closeModalAgregarAlimentacion = () => {
+    setModalAgregarAlimentacionVisible(false);
+  }
 
   // Este array contiene los planes de alimentacion.
   const alimentacion = [
@@ -130,12 +136,73 @@ const Alimentacion = () => {
       {alimentoSeleccionado && (
         <ModalAlimentacion
           alimentacion={alimentoSeleccionado}
-          accion={closeModal}
+          accion={closeModalAlimentacion}
         />
       )}
+      {
+        esModalAgregarAlimentacionVisible && <ModalAgregarAlimentacion closeModalAgregarAlimentacion={closeModalAgregarAlimentacion} />
+      }
+      
+      <button className="agregar-alimentacion flex-center" onClick={() => setModalAgregarAlimentacionVisible(true)}>
+        <span>Agregar Plan</span>
+        <Plus width={15} />
+      </button>
     </section>
   );
 };
+
+const ModalAgregarAlimentacion = ({closeModalAgregarAlimentacion}) => {
+  return (
+    <section className="modal-alimentacion">
+      <X className="close-modal" width={29} height={29} onClick={closeModalAgregarAlimentacion}/>
+      <div className="modal-alimentacion-contenido">
+        <span className="modal-alimentacion-agregar-titulo">Agregar Plan</span>
+
+        <div className="form-agregar-alimentacion">
+          <div className="form-agregar-alimentacion-objetivo">
+            <label>Objetivo: </label>
+            <select name="" id="">
+              <option value="Mantenimiento">Mantenimiento</option>
+              <option value="Bajar grasa">Bajar grasa</option>
+              <option value="Ganar masa muscular">Ganar masa muscular</option>
+            </select>
+          </div>
+
+          <div className="form-agregar-alimentacion-descripcion">
+            <label>Descripcion: </label>
+            <textarea />
+          </div>
+
+          <div className="form-agregar-alimentacion-macros">
+            <span>Nutrientes: </span>
+            <label>Proteina: </label>
+            <select name="" id="">
+              <option value="baja">Baja</option>
+              <option value="medio">Medio</option>
+              <option value="media alta">Media Alta</option>
+              <option value="alta">Alta</option>
+            </select>
+            <label>Carbohidratos: </label>
+            <select name="" id="">
+              <option value="baja">Baja</option>
+              <option value="medio">Medio</option>
+              <option value="media alta">Media Alta</option>
+              <option value="alta">Alta</option>
+            </select>
+            <label>Grasas: </label>
+            <select name="" id="">
+              <option value="baja">Baja</option>
+              <option value="medio">Medio</option>
+              <option value="media alta">Media Alta</option>
+              <option value="alta">Alta</option>
+            </select>
+          </div>
+        </div>
+        
+      </div>
+    </section>
+  )
+}
 
 const BotonSelector = ({ text, agregarFiltro }) => {
   const [seleccionado, setSeleccionado] = useState(false);

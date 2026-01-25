@@ -1,5 +1,6 @@
 .alimentacion {
     overflow: scroll;
+    position: relative;
 }
 
 .alimentacion-objetivos {
@@ -26,6 +27,105 @@
 .alimentacion-objetivos .boton-seleccion.seleccionado {
     background-color: black;
     border: 1px solid #ccc;
+}          
+
+.agregar-alimentacion {
+    min-width: 200px;
+    margin: auto;
+    border: 1px dotted #cccccc9d;
+    border-radius: 5px;
+    background-color: transparent;
+    color: rgba(255, 255, 255, 0.801);
+    transition: background-color 0.3s, border 0.3s, color 0.3s;
+}
+
+.agregar-alimentacion:hover {
+    background-color: #ffffff1a;
+    border: 1px dotted white;
+    cursor: pointer;
+    color: white;
+}
+
+.agregar-alimentacion span {
+    padding: 12px;
+}
+
+/*  ESTILOS MODAL AGREGAR ALIMENTACION  */
+
+.modal-alimentacion-agregar-titulo {
+    display: block;
+    text-align: center;
+    padding: 10px;
+    color: goldenrod;
+    font-size: clamp(18px, 2vw, 24px);
+    text-shadow: 1px 1px 0px  rgba(250, 87, 23, 0.918);
+}
+
+.form-agregar-alimentacion {
+    width: 90%;
+    height: 85%;
+    margin: auto;
+    overflow: scroll;
+}
+
+.form-agregar-alimentacion div {
+    width: 100%;
+    padding: 8px;
+    gap: 10px;
+}
+
+.form-agregar-alimentacion input {
+    border: none;
+    border-bottom: 1px solid #ffffff83;
+    background-color: transparent;
+    color: white;
+    padding: 4px;
+}
+
+.form-agregar-alimentacion-objetivo {
+    display: flex;
+    gap: 8px;
+    flex-direction: column;
+}
+
+.form-agregar-alimentacion-macros select,
+.form-agregar-alimentacion-objetivo select {
+    border: none;
+    border-bottom: 1px solid #ffffff83;
+    background-color: transparent;
+    color: white;
+    padding: 4px;
+    
+}
+
+.form-agregar-alimentacion-descripcion {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-agregar-alimentacion-descripcion textarea {
+    resize: none;
+    height: 70px;
+    border: none;
+    border-bottom: 1px solid #ffffff83;
+    outline-style: none;
+    background-color: transparent;
+    padding: 4px;
+    color: white;
+}
+
+.form-agregar-alimentacion-descripcion textarea:focus,
+.form-agregar-alimentacion-descripcion select:focus {
+    border-bottom: 1px solid #ffffff;
+    border-left: 1px dotted #ffffff83;
+    border-right: 1px dotted #ffffff83;
+    border-top: 1px dotted #ffffff83;
+}
+
+.form-agregar-alimentacion-macros {
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
 }
 
 /*  ESTILOS PLAN DE ALIMENTACION  */
@@ -36,12 +136,13 @@
     justify-content: space-around;
     flex-wrap: wrap;
     overflow: scroll;
+    margin-top: 5% ;
 }
 
 .tarjeta-alimentacion {
     position: relative;
     border-radius: 5px 5px 0 0;
-    margin: 5% 0;
+    margin: 5% 2%;
     width: 90%;
     max-width: 250px;
     display: flex;
@@ -89,12 +190,13 @@
     z-index: 1000000000;
     height: 100%;
     background-color: #000000c0;
+    overscroll-behavior: contain;
     width: 100%;
 }
 
 .close-modal {
     position: absolute;
-    right: 3%;
+    right: 5%;
     top: 3%;
     cursor: pointer;
 }
@@ -107,7 +209,7 @@
     transform: translate(-50%, -50%);
     max-width: 400px;
     background-color: black;
-    border: 1px solid white;
+    border: 1px solid #ffffff83;
     height: 60%;
     border-radius: 5px;
     font-size: clamp(14px, 1vw, 16px);
