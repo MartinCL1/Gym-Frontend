@@ -1,10 +1,26 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./auth.css";
 import { EyeOff, Eye, LogIn } from "lucide-react";
 import Boton from "../../shared/ui/Boton";
 import { AnimatePresence, motion } from "motion/react";
 
 const LoginForm = () => {
+
+
+
+  useEffect( () => {
+    (async () => {
+      const peticionSesion = await fetch('http://localhost:3500/login', { credentials: "include", })
+      const peticionJson = await peticionSesion.json()
+  
+      console.log(peticionJson)
+    })()
+  }, [])
+
+  const iniciarSesion = () => {
+
+  }
+
   const [visiblePassword, setVisiblePassword] = useState({
     loginPassword: false,
     registerPassword: false,
