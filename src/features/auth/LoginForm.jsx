@@ -1,26 +1,49 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./auth.css";
 import { EyeOff, Eye, LogIn } from "lucide-react";
 import Boton from "../../shared/ui/Boton";
 import { AnimatePresence, motion } from "motion/react";
+import useSesion from "../../hooks/useSesion";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
+  const { acceso } = useSesion();
+  const navigate = useNavigate()
 
-
-
-  useEffect( () => {
-    (async () => {
-      const peticionSesion = await fetch('http://localhost:3500/login', { credentials: "include", })
-      const peticionJson = await peticionSesion.json()
-  
-      console.log(peticionJson)
-    })()
-  }, [])
-
-  const iniciarSesion = () => {
-
+  if(acceso) {
+    navigate('/memberSection', {replace: true})
   }
 
+  const [ usuarioCredenciales, setUsuarioCredenciales ] = useState ( {
+    nombre_usuario: "",
+    contrasena: ""
+  })
+
+  // TODO Funciones para hacer un login.
+  const iniciarSesion = async () => {
+    const respuestaSesion = await fetch("http://localhost:3500/login", 
+    {
+      credentials: "include",
+      method: "POST",
+      body: JSON.stringify({
+        nombre_usuario: usuarioCredenciales.nombre_usuario,
+        contrasena: usuarioCredenciales.contrasena
+      }),
+      headers: {"Content-Type": "application/json"}
+    })
+    const respuestaSesionJSON = await respuestaSesion.json();
+    console.log(respuestaSesionJSON)
+  }
+
+  const llenarFormUsuario = (evento) => {
+    setUsuarioCredenciales({
+      ...usuarioCredenciales,
+      [evento.target.name]: evento.target.value
+    })
+    console.log(usuarioCredenciales)
+  }
+
+  // TODO -------------------------------
   const [visiblePassword, setVisiblePassword] = useState({
     loginPassword: false,
     registerPassword: false,
@@ -64,12 +87,14 @@ const LoginForm = () => {
                 <span>El entrenamiento espera!</span>
                 <div className="login-form--content-input">
                   <label htmlFor="">Username</label>
-                  <input type="text" />
+                  <input type="text" onChange={llenarFormUsuario} name="nombre_usuario" />
                 </div>
                 <div className="login-form--content-input">
                   <label htmlFor="">Password</label>
                   <input
                     type={visiblePassword.loginPassword ? "text" : "password"}
+                    name="contrasena"
+                    onChange={llenarFormUsuario}
                   />
                   {visiblePassword.loginPassword ? (
                     <EyeOff
@@ -84,7 +109,7 @@ const LoginForm = () => {
                   )}
                 </div>
                 <div className="login-options flex-center">
-                  <Boton Icon={LogIn} path={"/memberSection"} text={"Ingresar"} />
+                  <Boton Icon={LogIn} accion={iniciarSesion} text={"Ingresar"} />
                   <button
                     onClick={switchToSignUp}
                     className="login-options--register"
