@@ -5,12 +5,16 @@ import Boton from "../../shared/ui/Boton";
 import { AnimatePresence, motion } from "motion/react";
 import useSesion from "../../hooks/useSesion";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { establecerUsuario } from '../../../store/userSlice/userSlice'
 
 const LoginForm = () => {
-  const { acceso } = useSesion();
+  const { acceso, cargando, usuario } = useSesion();
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
-  if(acceso) {
+  if(!cargando && acceso) {
+    dispatch(establecerUsuario(usuario))    
     navigate('/memberSection', {replace: true})
   }
 
@@ -32,7 +36,8 @@ const LoginForm = () => {
       headers: {"Content-Type": "application/json"}
     })
     const respuestaSesionJSON = await respuestaSesion.json();
-    console.log(respuestaSesionJSON)
+    
+    if(respuestaSesionJSON.respuesta) return navigate('/memberSection', {replace: true})
   }
 
   const llenarFormUsuario = (evento) => {
@@ -40,7 +45,6 @@ const LoginForm = () => {
       ...usuarioCredenciales,
       [evento.target.name]: evento.target.value
     })
-    console.log(usuarioCredenciales)
   }
 
   // TODO -------------------------------
@@ -69,8 +73,7 @@ const LoginForm = () => {
     restoreVisibility();
   };
 
-  return (
-    <section className="login-form flex-center">
+  return <section className="login-form flex-center">
       <section className="login-form--content">
         <section className={`wrapper-login ${showSignUp ? "left" : "no-left"}`}>
           <AnimatePresence mode="wait">
@@ -200,7 +203,6 @@ const LoginForm = () => {
         />
       </section>
     </section>
-  );
 };
 
 export default LoginForm;

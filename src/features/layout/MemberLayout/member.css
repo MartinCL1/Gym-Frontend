@@ -17,6 +17,30 @@
   gap: 14px;
 }
 
+.member-opciones {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  min-width: 200px;
+  max-width: 500px;
+}
+
+.member-opciones button {
+  padding: 10px ;
+  border: 1px solid white;
+  border-radius: 5px;
+  background-color: transparent;
+  color: white;
+  font-weight: 700;
+  letter-spacing: .3px; 
+}
+
+.member-opciones button:hover {
+  background-color: white;
+  color: black;
+}
+
+
 @media (width <= 740px) {
 
   .member-wrapper {
@@ -34,4 +58,102 @@
   .member-wrapper-content {
     width: 100% !important;
   }
+}
+
+
+
+/*
+! Estilos de modal publicacion, se debe de mover a su archivo correspondiente.
+*/
+
+.modal-publicacion {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  /* overscroll-behavior: contain; */
+  z-index: 10000;
+}
+
+.close-modal {
+  color: white;
+}
+
+.publicacion-informacion {
+  width: 90%;
+  height: 50%;
+  max-width: 400px;
+  min-height: 300px;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.publicacion-informacion div {
+  color: white;
+}
+
+.titulo-publicacion, .descripcion-publicacion {
+  width: 100%;
+}
+
+.titulo-publicacion input {
+  width: 100%;
+  border: none;
+  background-color: transparent;
+  color: white;
+  border: 1px solid #cccccc46;
+  padding: 14px;
+}
+
+.descripcion-publicacion {
+  flex-grow: 1;
+}
+
+.descripcion-publicacion textarea {
+  height: 100%;
+  color: white;
+  background-color: transparent;
+  border: none;
+  resize: none;
+  width: 100%;
+  outline-style: none;
+  border: 1px solid #cccccc46;
+  padding: 8px;
+  border-radius: 5px;
+}
+
+.descripcion-publicacion textarea::placeholder {
+  color: rgba(240, 248, 255, 0.521);
+  font-family: inherit;
+}
+
+
+.file-upload {
+  border-radius: 5px;
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #cccccc46;
+  flex-direction: column;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.publicacion-imagen-upload {
+  color: #ccccccdc;
+  height: 28px;
+  width: 28px;
+}
+
+.opciones-publicacion {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.opciones-publicacion button {
+  padding: 4px 16px;
+  background-color: transparent;
+  color: white;
+  border: 1px solid #cccccc46;
+  border-radius: 4px;
 }

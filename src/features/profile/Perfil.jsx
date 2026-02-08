@@ -1,5 +1,7 @@
+import { useSelector } from "react-redux";
 import DashboardAdmin from "./components/DashboardAdmin";
 import "./components/styles.css";
+import { MoveRight } from "lucide-react";
 
 const amigos = [
   { username: "Martin Cox", cantidadAmigos: 245, foto: `https://picsum.photos/300/300?random=${Math.random()}` },
@@ -11,6 +13,8 @@ const amigos = [
 ];
 
 const Perfil = () => {
+  const usuario = useSelector(state => state.user.user)
+
   return (
     <section className="perfil">
       <div className="perfil-wrapper">
@@ -21,8 +25,8 @@ const Perfil = () => {
           />
           <div className="perfil-banner-informacion">
             <div>
-              <h2>Martin Cox</h2>
-              <p>Explorador urbano y amante de la fotografía</p>
+              <h2>{usuario.nombre}</h2>
+              <p>{usuario.descripcion_perfil}</p>
               <button className="membresia-usuario">Ver Membresia</button>
             </div>
             <div className="opciones">
@@ -67,7 +71,7 @@ const ListaAmigos = () => {
 
       <button className="mas-amigos flex-center">
         <h2>Mostrar mas amigos</h2>
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-move-right-icon lucide-move-right"><path d="M18 8L22 12L18 16"/><path d="M2 12H22"/></svg>
+        <MoveRight />
       </button>
     </div>
   );

@@ -1,7 +1,11 @@
+import { useSelector } from "react-redux";
 import Boton from "../../../shared/ui/Boton";
 import "./styles.css";
 
-const BannerProfile = ({ username = "Martin W. Cox", role = "Member" }) => {
+const BannerProfile = () => {
+
+  const usuario = useSelector((state) => state.user.user)
+
   return (
     <div className="profile-image flex-center">
       <div className="profile-avatar flex-center">
@@ -11,10 +15,10 @@ const BannerProfile = ({ username = "Martin W. Cox", role = "Member" }) => {
         />
       </div>
       <div className="flex-center profile-information">
-        <span>{username}</span>
-        <p>{role}</p>
+        <span>{usuario.nombre_usuario}</span>
+        <p>{usuario.role}</p>
       </div>
-      <Boton path={"memberSection/perfil"} text={"Ver Perfil"} />
+      <Boton path={"/memberSection/perfil"} text={"Ver Perfil"} />
       <hr />
     </div>
   );

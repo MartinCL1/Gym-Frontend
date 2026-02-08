@@ -1,0 +1,54 @@
+.loader-principal {
+    background-color: black;
+    width: 100%;
+    height: 100vh ;
+    position: relative;
+}
+
+[class*="barra"] {
+    position: absolute;
+    width: 15px;
+    border-radius: 50%;
+    height: 15px;
+    background-color: white;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    
+}
+
+.barra1 {
+    left: 46%;
+}
+
+.barra2 {
+    left: 48%;
+}
+
+.barra3 {
+    left: 50%;
+}
+.barra4 {
+    left: 52%;
+}
+.barra5 {
+    left: 54%;
+}
+
+.loader-main {
+    position: relative;
+    height: 25%;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.loader-container {
+    height: 50%;
+    position: relative;
+    width: 100%;
+}
+
+.cargando-label {
+    color: white;
+    font-weight: 400;
+    text-align: center;
+}

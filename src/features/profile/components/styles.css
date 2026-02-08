@@ -29,6 +29,10 @@ hr {
   flex-direction: column;
 }
 
+.profile-information span {
+  text-transform: capitalize;
+}
+
 .profile-information p {
   font-weight: 200;
 }
@@ -66,6 +70,10 @@ hr {
   display: flex;
   align-items: center;
   height: 100%;
+}
+
+.perfil-banner h2 {
+  text-transform: capitalize;
 }
 
 .perfil-banner img {
