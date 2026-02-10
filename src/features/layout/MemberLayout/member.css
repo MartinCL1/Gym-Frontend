@@ -20,6 +20,7 @@
 .member-opciones {
   position: absolute;
   top: 12px;
+  overflow: hidden;
   left: 12px;
   min-width: 200px;
   max-width: 500px;
@@ -66,94 +67,144 @@
 ! Estilos de modal publicacion, se debe de mover a su archivo correspondiente.
 */
 
-.modal-publicacion {
+.modal-overlay {
   position: fixed;
-  width: 100%;
-  height: 100%;
-  background-color: black;
-  /* overscroll-behavior: contain; */
-  z-index: 10000;
+  background-color: rgba(0, 0, 0, 0.699);
+  inset: 0;
 }
 
-.close-modal {
-  color: white;
-}
-
-.publicacion-informacion {
+.modal-contenido {
+  outline-style: none;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   width: 90%;
+  max-width: 500px;
+  max-height: 400px;
+  min-height: 350px;
   height: 50%;
-  max-width: 400px;
-  min-height: 300px;
+  border: 1px solid #ffffff4d;
+  border-radius: 5px;
+  background-color: #070707;
+  padding: 12px;
   flex-direction: column;
-  gap: 5px;
+  gap: 1em;
 }
 
-.publicacion-informacion div {
-  color: white;
-}
-
-.titulo-publicacion, .descripcion-publicacion {
+.contenido-principal {
+  display: flex;
   width: 100%;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
 }
 
-.titulo-publicacion input {
-  width: 100%;
-  border: none;
-  background-color: transparent;
-  color: white;
-  border: 1px solid #cccccc46;
-  padding: 14px;
+.modal-titulo-publicacion,
+.modal-descripcion-publicacion,
+.modal-imagen-publicacion {
+  width: 90%;
+  max-width: 300px;
 }
 
-.descripcion-publicacion {
-  flex-grow: 1;
-}
-
-.descripcion-publicacion textarea {
-  height: 100%;
-  color: white;
+.modal-contenido input {
   background-color: transparent;
   border: none;
-  resize: none;
+  color: white;
+  border-bottom: 1px solid #ffffff4d;
   width: 100%;
   outline-style: none;
-  border: 1px solid #cccccc46;
-  padding: 8px;
-  border-radius: 5px;
+  padding: 8px 4px;
 }
 
-.descripcion-publicacion textarea::placeholder {
-  color: rgba(240, 248, 255, 0.521);
-  font-family: inherit;
+.modal-contenido input:placeholder{
+  color: #cccccc8a;
 }
 
+.modal-contenido input:focus {
+  border-bottom: 1px solid white;
+}
 
-.file-upload {
-  border-radius: 5px;
+.modal-contenido textarea {
+  outline-style: none;
   width: 100%;
-  padding: 8px;
-  border: 1px solid #cccccc46;
-  flex-direction: column;
-  font-size: 12px;
+  padding: 8px 4px;
+  max-width: 300px;
+  min-height: 125px;
+  background-color:transparent;
+  border: 1px solid #ffffff4d;
+  border-radius: 5px;
+  color: white;
+  resize: none;
+}
+
+.modal-contenido textarea:focus {
+  border: 1px solid rgb(255, 255, 255);
+}
+
+.modal-contenido input::placeholder {
+  color: #ccc;
+}
+
+.modal-titulo {
+  color: white;
+}
+
+.modal-imagen-publicacion {
+  width: 90%;
+  max-width: 300px;
+  border: 1px dotted #ffffff4d;
+  padding: 10px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  border-radius: 5px;
+}
+
+.modal-imagen-publicacion:hover {
+  border-color: white;
   cursor: pointer;
 }
 
-.publicacion-imagen-upload {
-  color: #ccccccdc;
-  height: 28px;
-  width: 28px;
+.modal-imagen-publicacion,
+.modal-descripcion-publicacion textarea,
+.modal-titulo-publicacion input {
+  transition: border .5s ease-in-out;
 }
 
-.opciones-publicacion {
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
+.modal-botones {
+  width: 90%;
+  max-width: 300px;
+  justify-content: space-between;
 }
 
-.opciones-publicacion button {
-  padding: 4px 16px;
+.modal-botones button {
+  padding: 8px 32px;
+  border: 1px solid #ffffff4d;
   background-color: transparent;
+  border-radius: 5px;
   color: white;
-  border: 1px solid #cccccc46;
-  border-radius: 4px;
+  transition: border .5s ease-in-out;
+}
+
+.modal-botones button:hover {
+  border: 1px solid white;
+}
+
+
+/* Toast styles */
+
+.advise {
+  border: 1px solid rgba(255, 255, 255, 0.267);
+  width: 250px;
+  position: fixed;
+  border-radius: 8px;
+  box-shadow: 2px 4px 5px black;
+  bottom: 4%;
+  right: 2%;
+  height: 50px;
+  background-color: rgb(24, 23, 23);
+  color: white;
 }
