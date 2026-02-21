@@ -5,35 +5,6 @@
     position: relative;
 }
 
-[class*="barra"] {
-    position: absolute;
-    width: 15px;
-    border-radius: 50%;
-    height: 15px;
-    background-color: white;
-    transform: translate(-50%, -50%);
-    top: 50%;
-    
-}
-
-.barra1 {
-    left: 46%;
-}
-
-.barra2 {
-    left: 48%;
-}
-
-.barra3 {
-    left: 50%;
-}
-.barra4 {
-    left: 52%;
-}
-.barra5 {
-    left: 54%;
-}
-
 .loader-main {
     position: relative;
     height: 25%;
@@ -44,7 +15,40 @@
 .loader-container {
     height: 50%;
     position: relative;
-    width: 100%;
+    width: 50%;
+    left: 50%;
+    max-width: 125px;
+    transform: translateX(-50%);
+}
+
+[class*="barra"] {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: white;
+    transform: translate(-50%, -50%);
+    top: 50%;
+}
+
+.barra1 {
+    left: 15%;
+}
+
+.barra2 {
+    left: 30%;
+}
+
+.barra3 {
+    left: 45%;
+}
+
+.barra4 {
+    left: 60%;
+}
+
+.barra5 {
+    left: 75%;
 }
 
 .cargando-label {

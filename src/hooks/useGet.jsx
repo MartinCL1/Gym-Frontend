@@ -5,17 +5,10 @@ const useGet = ( url ) => {
     const [acceso, setAcceso] = useState(false);
     const [informacion, setInformacion] = useState(null)
 
-    useEffect(() => {
-        (async() => {
-                await realizarPeticion()
-        })()
-    }, [])
-    
     const realizarPeticion = async () => {
         try {
             const peticion = await fetch(url, {credentials: "include"})
             const peticionResp = await peticion.json()
-            console.log("peticiones: ",peticionResp);
             setAcceso(peticionResp.respuesta)
             setInformacion(peticionResp.informacion)
             setCargando(false)
@@ -24,6 +17,13 @@ const useGet = ( url ) => {
             console.log(error.message)
         }
     }
+
+    useEffect(() => {
+        (async() => {
+            await realizarPeticion()
+        })()
+    }, [])
+    
 
     return {cargando, informacion, acceso}
 }

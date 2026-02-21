@@ -4,13 +4,14 @@
   position: relative;
   display: flex;
   grid-column: 1 / 5;
+  padding: 54px 0px 25px !important;
 }
 
 .member-wrapper-content {
+  overflow: hidden;
   position: relative;
   display: flex;
   flex-direction: column;
-  padding: 54px 0px 25px !important;
   width: 100%;
   height: 100%;
   overflow: auto;
@@ -71,6 +72,8 @@
   position: fixed;
   background-color: rgba(0, 0, 0, 0.699);
   inset: 0;
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
 }
 
 .modal-contenido {
@@ -80,14 +83,13 @@
   top: 50%;
   transform: translate(-50%, -50%);
   width: 90%;
-  max-width: 500px;
+  max-width: 400px;
   max-height: 400px;
-  min-height: 350px;
+  min-height: 380px;
   height: 50%;
-  border: 1px solid #ffffff4d;
+  border: 1px solid #ffffff27;
   border-radius: 5px;
   background-color: #070707;
-  padding: 12px;
   flex-direction: column;
   gap: 1em;
 }
@@ -100,12 +102,19 @@
   gap: 12px;
 }
 
+.modal-titulo {
+  text-align: center;
+  width: 100%;
+}
+
 .modal-titulo-publicacion,
 .modal-descripcion-publicacion,
 .modal-imagen-publicacion {
   width: 90%;
   max-width: 300px;
 }
+
+
 
 .modal-contenido input {
   background-color: transparent;

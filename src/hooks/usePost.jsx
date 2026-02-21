@@ -1,29 +1,21 @@
 import { useState } from "react"
-
+import { insertarPublicacion } from "../services/publicaciones.services"
 
 export const usePost = () => {
-    const [cargando, setCargando] = useState(false)
+    const [cargando, setCargando] = useState(null)
     const [respuesta, setRespuesta] = useState(null)
     const [error, setError] = useState(null)
 
-    const enviarPeticion = async(ruta, datos) => {
-        setCargando(false)
+    const enviarPeticion = async( datos ) => {
+        setCargando(true)
 
         try {
-            const peticion = await fetch(`http://localhost:3500/${ruta}`, {
-                method: "POST",
-                credentials: "include",
-                body: JSON.stringify(datos),
-                headers: {"Content-Type": "application/json"}
-            })
-
-            const respuestaPeticion = await peticion.json() 
-
+            const peticion = await insertarPublicacion(datos)
+            setRespuesta(peticion.respuesta)
             setCargando(false)
-            setRespuesta(respuestaPeticion)
-        } catch {
+        } catch( error ) {
             setCargando(false)
-            setError(true)
+            setError(error)
         }
 
     }

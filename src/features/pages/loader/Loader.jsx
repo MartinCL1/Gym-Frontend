@@ -1,11 +1,9 @@
 import { useRef } from 'react'
 import './loader.css'
-import { motion, useInView } from 'motion/react'
-import { Repeat } from 'lucide-react'
+import { motion } from 'motion/react'
 
 const Loader = () => {
     const referenciaLoader = useRef(null)
-    const visibleLoader = useInView(referenciaLoader)
 
     const variantes = {
         inicial: {
@@ -15,8 +13,7 @@ const Loader = () => {
             y: 0
         }
     }
-
-    
+        
     return (
        <motion.div className='loader-principal' ref={referenciaLoader} >
         <div className="loader-main">

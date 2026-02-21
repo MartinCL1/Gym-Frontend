@@ -8,10 +8,10 @@ const Profile = ({ pressed }) => {
   const [profileSize, setProfileSize] = useState(0);
 
   useEffect(() => {
-    const size = profileRef?.current.getBoundingClientRect().width;
-    console.log(size)
-    setProfileSize(size);
-    console.log(pressed)
+    (async() => {
+      const size = profileRef?.current.getBoundingClientRect().width;
+      setProfileSize(size);
+    })()
   }, [pressed]);
  
   return (

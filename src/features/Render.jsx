@@ -6,6 +6,7 @@ import useSesion from "../hooks/useSesion";
 import { useDispatch, useSelector } from "react-redux";
 import { establecerUsuario } from "../../store/userSlice/userSlice";
 import Loader from "./pages/loader/Loader";
+import { setNavegacion } from "../../store/globalSlice";
 
 const Render = () => {
   const show = useSelector((state) => state.global.navegacion);
@@ -19,15 +20,15 @@ const Render = () => {
     dispatch(establecerUsuario(usuario));
   }
 
-  const accion = () => {
-    setShow(!show);
+  const toggleNavegacion = () => {
+    dispatch(setNavegacion(!show))
   };
 
   return cargando ? (
     <Loader />
     ) : (
     <div className="principal">
-      <MenuBoton accion={accion} />
+      <MenuBoton toggleNavegacion={toggleNavegacion} />
       <Outlet />
       <Profile pressed={show} />
     </div>

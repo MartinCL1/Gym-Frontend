@@ -1,18 +1,24 @@
 import "./member.css";
 import CardInformation from "../../../shared/cardInformation/CardInformation";
-import useGet from "../../../hooks/useGet";
 import { useEffect, useRef, useState } from "react";
 import { usePost } from "../../../hooks/usePost";
 import { Dialog } from "radix-ui";
 import { AnimatePresence, motion } from 'motion/react'
 import { Upload } from "lucide-react";
-
+import { useDispatch, useSelector } from "react-redux";
+import { anadirPublicacion} from "../../../../store/publicacionesSlice/publicacionesSlice";
+import useGetPublicaciones from "../../../hooks/Publicaciones/useGetPublicaciones";
+import { v4 as uuidv4 } from 'uuid'
+const imagen = import.meta.env.VITE_IMAGENES_PRUEBA
 
 const MemberLayout = () => {
   const [mostrarModalPublicacion, setMostrarModalPublicacion] = useState(false);
   const { cargando:postCargando, respuesta, enviarPeticion } = usePost(false);
   const [visibilidadToast, setVisibilidadToast] = useState(false)
+  const publicaciones = useSelector((state) => state.publicaciones.publicaciones)
+  const {cargandoPublicaciones, errorPublicaciones, respuestaPublicaciones} = useGetPublicaciones()
 
+  // esto lo podemos remover a un componente que sirva pra mostrar el mensaje de adicion
   useEffect(() => {
     if(postCargando || respuesta) {
       setVisibilidadToast(true)
@@ -21,17 +27,17 @@ const MemberLayout = () => {
         setVisibilidadToast(false)
       }, 2000);
     }
+
   }, [postCargando, respuesta])
 
-
-  const { acceso, cargando, informacion } = useGet(
-    "http://localhost:3500/publicaciones",
-  );
+  useEffect(() => {
+    console.log(publicaciones)
+  }, [publicaciones])
 
   const closeModal = () => {
     setMostrarModalPublicacion(false);
   };
-
+  
   const openModal = () => {
     setMostrarModalPublicacion(true);
   };
@@ -39,12 +45,9 @@ const MemberLayout = () => {
   return (
     <div className="member-wrapper">
       <div className="member-wrapper-content">
-        {/* Aqui colocamos la info de las demas personas como lo que han publicado*/}
-        {/* {cardData.map((data, index) => (
-          
-        ))} */}
-        {informacion &&
-          informacion.map((data) => <CardInformation data={data} />)}
+        { (!errorPublicaciones && !cargandoPublicaciones && respuestaPublicaciones) &&
+          publicaciones.map((data) => <CardInformation data={data} key={data?.key} />)
+        }
       </div>
       <div className="member-opciones">
         <button onClick={openModal}>Agregar Publicacion</button>
@@ -70,11 +73,19 @@ const MemberLayout = () => {
 //! Se debe de cambiar por un archivo unico.
 
 const ModalPublicacion = ({ visible, cerrarModal, enviarPeticion }) => {
-  const referenciaFile = useRef(null)
+  const dispatch = useDispatch();
+  const referenciaFile = useRef(null);
+  //? Publicacion que se subira
+  // .select("publicador, interacciones, comentarios, guardado, descripcion, imagen, titulo")
   const [publicacion, setPublicacion] = useState({
-    titulo: "",
+    key: "",
+    publicador: "",
+    interacciones: 0,
+    comentarios: 0,
+    guardado: 0,
     descripcion: "",
-    imagen: "cualquiera"
+    imagen: imagen,
+    titulo: ""
   }) 
 
   const seleccionarImagen = () => {
@@ -96,10 +107,25 @@ const ModalPublicacion = ({ visible, cerrarModal, enviarPeticion }) => {
   }
 
   const subirPublicacion = async () => {
-    // Primero debemos de validar la informacion...
-    cerrarModal()
-    await enviarPeticion('publicaciones', publicacion)
-  };
+    setPublicacion({
+      ...publicacion,
+      ["key"]: uuidv4()
+    })
+    const camposLlenos = comprobarCampos()
+
+    if(!camposLlenos) return
+    dispatch(anadirPublicacion(publicacion))
+    await enviarPeticion(publicacion)
+  };+3
+  
+
+  const comprobarCampos = () => {
+    if(!publicacion.imagen.length > 0 || 
+      !publicacion.titulo > 0) {
+        return false
+    }
+    return true
+  }
 
   return (
     <Dialog.Root open={visible} >
@@ -109,10 +135,10 @@ const ModalPublicacion = ({ visible, cerrarModal, enviarPeticion }) => {
           <Dialog.Title className="modal-titulo">Crea tu publicacion</Dialog.Title>
           <div className="contenido-principal">
             <div className="modal-titulo-publicacion">
-              <input type="text" name="titulo" placeholder="Ingresa el titulo de tu publicacion..." onChange={modificarPublicacion} />
+              <input type="text" name="titulo" required autoComplete="off" placeholder="Ingresa el titulo de tu publicacion..." onChange={modificarPublicacion} />
             </div>
             <div className="modal-descripcion-publicacion">
-              <textarea name="descripcion" id=""  placeholder="Escribe algo..." onChange={modificarPublicacion}>
+              <textarea name="descripcion" id="" required placeholder="Escribe algo..." onChange={modificarPublicacion}>
               </textarea>
             </div>  
             <div className="modal-imagen-publicacion" onClick={seleccionarImagen}>
@@ -124,7 +150,7 @@ const ModalPublicacion = ({ visible, cerrarModal, enviarPeticion }) => {
             <button onClick={cerrarModal}>Cancelar</button>
             <button onClick={subirPublicacion}>Aceptar</button>
           </div>
-          <input type="file" accept="image/png" onChange={capturarFile} hidden ref={referenciaFile} />
+          <input type="file" accept="image/png" required onChange={capturarFile} hidden ref={referenciaFile} />
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>
@@ -132,7 +158,7 @@ const ModalPublicacion = ({ visible, cerrarModal, enviarPeticion }) => {
 };
 
 
-const PopUp = ({cargando=false, respuesta = true}) => {
+const PopUp = ({cargando, respuesta}) => {
 
   return (
     <motion.div className="advise flex-center"
