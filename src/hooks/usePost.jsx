@@ -11,6 +11,7 @@ export const usePost = () => {
 
         try {
             const peticion = await insertarPublicacion(datos)
+            console.log(peticion)
             setRespuesta(peticion.respuesta)
             setCargando(false)
         } catch( error ) {

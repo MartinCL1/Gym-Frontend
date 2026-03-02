@@ -75,8 +75,7 @@ const MemberLayout = () => {
 const ModalPublicacion = ({ visible, cerrarModal, enviarPeticion }) => {
   const dispatch = useDispatch();
   const referenciaFile = useRef(null);
-  //? Publicacion que se subira
-  // .select("publicador, interacciones, comentarios, guardado, descripcion, imagen, titulo")
+
   const [publicacion, setPublicacion] = useState({
     key: "",
     publicador: "",
@@ -102,8 +101,7 @@ const ModalPublicacion = ({ visible, cerrarModal, enviarPeticion }) => {
     })
   }
 
-  const capturarFile = () => {
-    
+  const capturarFile = (e) => {
   }
 
   const subirPublicacion = async () => {
@@ -112,13 +110,13 @@ const ModalPublicacion = ({ visible, cerrarModal, enviarPeticion }) => {
       ["key"]: uuidv4()
     })
     const camposLlenos = comprobarCampos()
+    cerrarModal()
 
     if(!camposLlenos) return
     dispatch(anadirPublicacion(publicacion))
     await enviarPeticion(publicacion)
-  };+3
+  }
   
-
   const comprobarCampos = () => {
     if(!publicacion.imagen.length > 0 || 
       !publicacion.titulo > 0) {
@@ -150,7 +148,7 @@ const ModalPublicacion = ({ visible, cerrarModal, enviarPeticion }) => {
             <button onClick={cerrarModal}>Cancelar</button>
             <button onClick={subirPublicacion}>Aceptar</button>
           </div>
-          <input type="file" accept="image/png" required onChange={capturarFile} hidden ref={referenciaFile} />
+          <input type="file" accept="image/*" required onChange={capturarFile} hidden ref={referenciaFile} />
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>
