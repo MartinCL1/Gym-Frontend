@@ -59,12 +59,11 @@ const MemberLayout = () => {
           <PopUp cargando={postCargando} respuesta={respuesta} />
         }
       </AnimatePresence>
-      <ModalPublicacion 
+      <ModalPublicacion
         visible={mostrarModalPublicacion} 
         cerrarModal={closeModal} 
         enviarPeticion={enviarPeticion} 
       />
-
     </div>
   );
 };
@@ -74,7 +73,10 @@ const MemberLayout = () => {
 
 const ModalPublicacion = ({ visible, cerrarModal, enviarPeticion }) => {
   const dispatch = useDispatch();
+  const [ warning, setWarning ] = useState(false)
   const referenciaFile = useRef(null);
+  const [preview, setPreview] = useState(null)
+  const [mostrarModal, setMostrarModal]  = useState(false)  
 
   const [publicacion, setPublicacion] = useState({
     key: "",
@@ -86,6 +88,21 @@ const ModalPublicacion = ({ visible, cerrarModal, enviarPeticion }) => {
     imagen: imagen,
     titulo: ""
   }) 
+
+  const cancelarPublicacion = () => {
+    setWarning(false)
+    setPreview(null)
+    setPublicacion({key: "",
+      publicador: "",
+      interacciones: 0,
+      comentarios: 0,
+      guardado: 0,
+      descripcion: "",
+      imagen: imagen,
+      titulo: ""})
+    
+    cerrarModal()
+  }
 
   const seleccionarImagen = () => {
     referenciaFile.current.click()
@@ -99,9 +116,18 @@ const ModalPublicacion = ({ visible, cerrarModal, enviarPeticion }) => {
       ...publicacion,
       [nombre]: valor
     })
+    setWarning(false)
   }
 
   const capturarFile = (e) => {
+    const file = e.target.files[0]
+
+    try {
+      const url = URL.createObjectURL(file)
+      setPreview(url)
+    } catch (error) {
+      console.log(error.message)
+    }
   }
 
   const subirPublicacion = async () => {
@@ -109,19 +135,34 @@ const ModalPublicacion = ({ visible, cerrarModal, enviarPeticion }) => {
       ...publicacion,
       ["key"]: uuidv4()
     })
+    
     const camposLlenos = comprobarCampos()
-    cerrarModal()
-
+    
     if(!camposLlenos) return
     dispatch(anadirPublicacion(publicacion))
-    await enviarPeticion(publicacion)
+    setPublicacion({key: "",
+      publicador: "",
+      interacciones: 0,
+      comentarios: 0,
+      guardado: 0,
+      descripcion: "",
+      imagen: imagen,
+      titulo: ""})
+      setPreview(null)
+      cerrarModal()
+      await enviarPeticion(publicacion)
   }
   
   const comprobarCampos = () => {
     if(!publicacion.imagen.length > 0 || 
-      !publicacion.titulo > 0) {
+        publicacion.titulo === ""   ||
+        publicacion.descripcion === "" ||
+        !preview 
+      ) {
+        setWarning(true)
         return false
     }
+    setWarning(false)
     return true
   }
 
@@ -130,6 +171,14 @@ const ModalPublicacion = ({ visible, cerrarModal, enviarPeticion }) => {
       <Dialog.Portal>
         <Dialog.Overlay className="modal-overlay" />
         <Dialog.Content className="modal-contenido flex-center">
+          {/* { warning &&
+            <div className="modal-warning">Llena todos los campos</div>
+          } */}
+          <AnimatePresence>
+          {
+            warning && <motion.div initial={{opacity: 0}} animate={{opacity: 1, top: "2%"}} exit={{opacity: 0, top: "0%"}} className="modal-warning"> LLena todos los campos </motion.div>
+          }
+          </AnimatePresence>
           <Dialog.Title className="modal-titulo">Crea tu publicacion</Dialog.Title>
           <div className="contenido-principal">
             <div className="modal-titulo-publicacion">
@@ -140,15 +189,16 @@ const ModalPublicacion = ({ visible, cerrarModal, enviarPeticion }) => {
               </textarea>
             </div>  
             <div className="modal-imagen-publicacion" onClick={seleccionarImagen}>
+              {preview && <span className="badge-modal-imagen flex-center"><p>1</p></span>}
               <Upload  className="upload-imagen"/>
               <span>Subir imagen</span>
             </div>
           </div>
           <div className="modal-botones flex-center">
-            <button onClick={cerrarModal}>Cancelar</button>
+            <button onClick={cancelarPublicacion}>Cancelar</button>
             <button onClick={subirPublicacion}>Aceptar</button>
           </div>
-          <input type="file" accept="image/*" required onChange={capturarFile} hidden ref={referenciaFile} />
+          <input type="file" multiple accept="image/*" required onChange={capturarFile} hidden ref={referenciaFile} />
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>
@@ -176,3 +226,6 @@ const PopUp = ({cargando, respuesta}) => {
 }
 
 export default MemberLayout;
+
+
+// Tenemos que agregar algunos mensajes que muestren si el contenido se agrego correctamente hay error o susedio correctamente.

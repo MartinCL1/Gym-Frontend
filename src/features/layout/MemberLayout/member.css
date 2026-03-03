@@ -84,15 +84,25 @@
   transform: translate(-50%, -50%);
   width: 90%;
   max-width: 400px;
-  max-height: 400px;
-  min-height: 380px;
   height: 50%;
+  min-height: max-content;
   border: 1px solid #ffffff27;
   border-radius: 5px;
   background-color: #070707;
-  flex-direction: column;
+  flex-direction: column; 
   gap: 1em;
+  padding: 10px 0;
 }
+
+.modal-warning {
+  position: absolute;
+  top: 0;
+  background-color: crimson;
+  padding: 5px;
+  border-radius: 5px;
+  color: white;
+}
+
 
 .contenido-principal {
   display: flex;
@@ -113,8 +123,6 @@
   width: 90%;
   max-width: 300px;
 }
-
-
 
 .modal-contenido input {
   background-color: transparent;
@@ -170,11 +178,27 @@
   justify-content: center;
   color: white;
   border-radius: 5px;
+  position: relative;
 }
 
 .modal-imagen-publicacion:hover {
   border-color: white;
   cursor: pointer;
+}
+
+.badge-modal-imagen {
+  position: absolute;
+  left: calc(100% - 15px);
+  bottom: calc(100% - 15px);
+  /* left: 95%;
+  top: 70%; */
+  padding: 10px;
+  border-radius: 50%;
+  height: 15px;
+  width: 15px;
+  background-color: black;
+  border: 1px solid rgba(255, 255, 255, 0.586);
+  text-align: center;
 }
 
 .modal-imagen-publicacion,
@@ -202,6 +226,14 @@
   border: 1px solid white;
 }
 
+.modal-imagen-vista-previa {
+  display: flex;
+  width: 90%;
+  overflow: hidden;
+  white-space: nowrap;
+  gap: 10px;
+  justify-content: space-around ;
+}
 
 /* Toast styles */
 
