@@ -102,7 +102,7 @@ const Alimentacion = () => {
   const filtrarAlimentacion = (plan) => {
     if (filtro.includes(plan)) {
       setFiltro(filtro.filter((item) => item !== plan));
-    }else {
+    } else {
       setFiltro([...filtro, plan]);
     }
   };
@@ -142,7 +142,7 @@ const Alimentacion = () => {
       {
         esModalAgregarAlimentacionVisible && <ModalAgregarAlimentacion closeModalAgregarAlimentacion={closeModalAgregarAlimentacion} />
       }
-      
+
       <button className="agregar-alimentacion flex-center" onClick={() => setModalAgregarAlimentacionVisible(true)}>
         <span>Agregar Plan</span>
         <Plus width={15} />
@@ -151,17 +151,37 @@ const Alimentacion = () => {
   );
 };
 
-const ModalAgregarAlimentacion = ({closeModalAgregarAlimentacion}) => {
+const ModalAgregarAlimentacion = ({ closeModalAgregarAlimentacion }) => {
+
+  const [planAlimentacion, setPlanAlimentacion] = useState({
+    objetivo: "",
+    descripcion: "",
+    proteina: "",
+    carbohidratos: "",
+    grasas: ""
+  })
+
+  const actualizarDatosAlimentacion = (ev) => {
+    const opcion = ev.target
+
+    setPlanAlimentacion({
+      ...planAlimentacion,
+      [opcion.name]: opcion.value
+    })
+
+    console.log(planAlimentacion)
+  }
+
   return (
     <section className="modal-alimentacion">
-      <X className="close-modal" width={29} height={29} onClick={closeModalAgregarAlimentacion}/>
+      <X className="close-modal" width={29} height={29} onClick={closeModalAgregarAlimentacion} />
       <div className="modal-alimentacion-contenido">
         <span className="modal-alimentacion-agregar-titulo">Agregar Plan</span>
 
         <div className="form-agregar-alimentacion">
           <div className="form-agregar-alimentacion-objetivo">
             <label>Objetivo: </label>
-            <select name="" id="">
+            <select name="objetivo" id="" onChange={actualizarDatosAlimentacion}>
               <option value="Mantenimiento">Mantenimiento</option>
               <option value="Bajar grasa">Bajar grasa</option>
               <option value="Ganar masa muscular">Ganar masa muscular</option>
@@ -169,28 +189,28 @@ const ModalAgregarAlimentacion = ({closeModalAgregarAlimentacion}) => {
           </div>
 
           <div className="form-agregar-alimentacion-descripcion">
-            <label>Descripcion: </label>
-            <textarea />
+            <label >Descripcion: </label>
+            <textarea name="descripcion" onChange={actualizarDatosAlimentacion} />
           </div>
 
           <div className="form-agregar-alimentacion-macros">
             <span>Nutrientes: </span>
             <label>Proteina: </label>
-            <select name="" id="">
+            <select name="proteina" id="" onChange={actualizarDatosAlimentacion}>
               <option value="baja">Baja</option>
               <option value="medio">Medio</option>
               <option value="media alta">Media Alta</option>
               <option value="alta">Alta</option>
             </select>
             <label>Carbohidratos: </label>
-            <select name="" id="">
+            <select name="carbohidratos" id="" onChange={actualizarDatosAlimentacion}>
               <option value="baja">Baja</option>
               <option value="medio">Medio</option>
               <option value="media alta">Media Alta</option>
               <option value="alta">Alta</option>
             </select>
             <label>Grasas: </label>
-            <select name="" id="">
+            <select name="grasas" id="" onChange={actualizarDatosAlimentacion}>
               <option value="baja">Baja</option>
               <option value="medio">Medio</option>
               <option value="media alta">Media Alta</option>
@@ -198,11 +218,17 @@ const ModalAgregarAlimentacion = ({closeModalAgregarAlimentacion}) => {
             </select>
           </div>
         </div>
-        
+        <div className="form-agregar-alimentacion-botones flex-center">
+          <button onClick={closeModalAgregarAlimentacion}>Cerrar</button>
+          <button>Aceptar</button>
+        </div>
       </div>
     </section>
   )
 }
+
+
+
 
 const BotonSelector = ({ text, agregarFiltro }) => {
   const [seleccionado, setSeleccionado] = useState(false);

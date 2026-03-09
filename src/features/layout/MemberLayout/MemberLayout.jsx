@@ -6,21 +6,21 @@ import { Dialog } from "radix-ui";
 import { AnimatePresence, motion } from 'motion/react'
 import { Upload } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
-import { anadirPublicacion} from "../../../../store/publicacionesSlice/publicacionesSlice";
+import { anadirPublicacion } from "../../../../store/publicacionesSlice/publicacionesSlice";
 import useGetPublicaciones from "../../../hooks/Publicaciones/useGetPublicaciones";
 import { v4 as uuidv4 } from 'uuid'
-const imagen = import.meta.env.VITE_IMAGENES_PRUEBA
+import { crearPublicacion, guardarImagenBackend, subirImagen, } from "../../../services/imagekit.services";
 
 const MemberLayout = () => {
   const [mostrarModalPublicacion, setMostrarModalPublicacion] = useState(false);
-  const { cargando:postCargando, respuesta, enviarPeticion } = usePost(false);
+  const { cargando: postCargando, respuesta } = usePost(false);
   const [visibilidadToast, setVisibilidadToast] = useState(false)
   const publicaciones = useSelector((state) => state.publicaciones.publicaciones)
-  const {cargandoPublicaciones, errorPublicaciones, respuestaPublicaciones} = useGetPublicaciones()
+  const { cargandoPublicaciones, errorPublicaciones, respuestaPublicaciones } = useGetPublicaciones()
 
   // esto lo podemos remover a un componente que sirva pra mostrar el mensaje de adicion
   useEffect(() => {
-    if(postCargando || respuesta) {
+    if (postCargando || respuesta) {
       setVisibilidadToast(true)
 
       setTimeout(() => {
@@ -37,7 +37,7 @@ const MemberLayout = () => {
   const closeModal = () => {
     setMostrarModalPublicacion(false);
   };
-  
+
   const openModal = () => {
     setMostrarModalPublicacion(true);
   };
@@ -45,14 +45,14 @@ const MemberLayout = () => {
   return (
     <div className="member-wrapper">
       <div className="member-wrapper-content">
-        { (!errorPublicaciones && !cargandoPublicaciones && respuestaPublicaciones) &&
-          publicaciones.map((data) => <CardInformation data={data} key={data?.key} />)
+        {(!errorPublicaciones && !cargandoPublicaciones && respuestaPublicaciones && publicaciones !== null) ?
+          publicaciones.map((data) => <CardInformation data={data} key={data?.key} />) : <div style={{ color: "white" }}>No hay publicaciones para mostrar</div>
         }
       </div>
       <div className="member-opciones">
         <button onClick={openModal}>Agregar Publicacion</button>
       </div>
-      
+
       <AnimatePresence>
         {
           visibilidadToast &&
@@ -60,9 +60,8 @@ const MemberLayout = () => {
         }
       </AnimatePresence>
       <ModalPublicacion
-        visible={mostrarModalPublicacion} 
-        cerrarModal={closeModal} 
-        enviarPeticion={enviarPeticion} 
+        visible={mostrarModalPublicacion}
+        cerrarModal={closeModal}
       />
     </div>
   );
@@ -71,13 +70,16 @@ const MemberLayout = () => {
 // !? Modal para mostrar en la creacion de una nueva publicacion.
 //! Se debe de cambiar por un archivo unico.
 
-const ModalPublicacion = ({ visible, cerrarModal, enviarPeticion }) => {
+const ModalPublicacion = ({ visible, cerrarModal}) => {
   const dispatch = useDispatch();
-  const [ warning, setWarning ] = useState(false)
+  const [warning, setWarning] = useState(false)
   const referenciaFile = useRef(null);
-  const [preview, setPreview] = useState(null)
-  const [mostrarModal, setMostrarModal]  = useState(false)  
 
+  //URL creado para dar una vista previa
+  const [preview, setPreview] = useState("")
+  // Archivo directo para almacenar
+  const [imagenPublicacion, setImagenPublicacion] = useState(null)
+  //  ----------------------------
   const [publicacion, setPublicacion] = useState({
     key: "",
     publicador: "",
@@ -85,22 +87,12 @@ const ModalPublicacion = ({ visible, cerrarModal, enviarPeticion }) => {
     comentarios: 0,
     guardado: 0,
     descripcion: "",
-    imagen: imagen,
+    imagen: "",
     titulo: ""
-  }) 
+  })
 
   const cancelarPublicacion = () => {
-    setWarning(false)
-    setPreview(null)
-    setPublicacion({key: "",
-      publicador: "",
-      interacciones: 0,
-      comentarios: 0,
-      guardado: 0,
-      descripcion: "",
-      imagen: imagen,
-      titulo: ""})
-    
+    formatearCampos()
     cerrarModal()
   }
 
@@ -116,54 +108,70 @@ const ModalPublicacion = ({ visible, cerrarModal, enviarPeticion }) => {
       ...publicacion,
       [nombre]: valor
     })
+
     setWarning(false)
   }
 
-  const capturarFile = (e) => {
+  const capturarFile = async (e) => {
     const file = e.target.files[0]
-
     try {
       const url = URL.createObjectURL(file)
       setPreview(url)
+      setImagenPublicacion(file)
     } catch (error) {
       console.log(error.message)
     }
   }
 
   const subirPublicacion = async () => {
-    setPublicacion({
+    const key = uuidv4();
+    const nuevaPublicacion = {
       ...publicacion,
-      ["key"]: uuidv4()
-    })
-    
+      key
+    }
+
     const camposLlenos = comprobarCampos()
-    
-    if(!camposLlenos) return
-    dispatch(anadirPublicacion(publicacion))
-    setPublicacion({key: "",
+    if (!camposLlenos) return
+
+    const { imagenResp } = await crearPublicacion(imagenPublicacion, publicacion)
+    const nieva = imagenResp.url
+    cerrarModal()
+
+    const publicacionFinal = {
+      ...nuevaPublicacion,
+      imagen: nieva
+    }
+
+    dispatch(anadirPublicacion(publicacionFinal))
+    formatearCampos()
+  }
+
+  const comprobarCampos = () => {
+    if (publicacion.titulo === "" ||
+      publicacion.descripcion === "" ||
+      !preview
+    ) {
+      setWarning(true)
+      return false
+    }
+    setWarning(false)
+    return true
+  }
+
+
+  const formatearCampos = () => {
+    setPublicacion({
+      key: "",
       publicador: "",
       interacciones: 0,
       comentarios: 0,
       guardado: 0,
       descripcion: "",
-      imagen: imagen,
-      titulo: ""})
-      setPreview(null)
-      cerrarModal()
-      await enviarPeticion(publicacion)
-  }
-  
-  const comprobarCampos = () => {
-    if(!publicacion.imagen.length > 0 || 
-        publicacion.titulo === ""   ||
-        publicacion.descripcion === "" ||
-        !preview 
-      ) {
-        setWarning(true)
-        return false
-    }
+      imagen: "",
+      titulo: ""
+    })
+    setPreview("")
     setWarning(false)
-    return true
   }
 
   return (
@@ -175,9 +183,9 @@ const ModalPublicacion = ({ visible, cerrarModal, enviarPeticion }) => {
             <div className="modal-warning">Llena todos los campos</div>
           } */}
           <AnimatePresence>
-          {
-            warning && <motion.div initial={{opacity: 0}} animate={{opacity: 1, top: "2%"}} exit={{opacity: 0, top: "0%"}} className="modal-warning"> LLena todos los campos </motion.div>
-          }
+            {
+              warning && <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1, top: "2%" }} exit={{ opacity: 0, top: "0%" }} className="modal-warning"> LLena todos los campos </motion.div>
+            }
           </AnimatePresence>
           <Dialog.Title className="modal-titulo">Crea tu publicacion</Dialog.Title>
           <div className="contenido-principal">
@@ -187,10 +195,10 @@ const ModalPublicacion = ({ visible, cerrarModal, enviarPeticion }) => {
             <div className="modal-descripcion-publicacion">
               <textarea name="descripcion" id="" required placeholder="Escribe algo..." onChange={modificarPublicacion}>
               </textarea>
-            </div>  
+            </div>
             <div className="modal-imagen-publicacion" onClick={seleccionarImagen}>
               {preview && <span className="badge-modal-imagen flex-center"><p>1</p></span>}
-              <Upload  className="upload-imagen"/>
+              <Upload className="upload-imagen" />
               <span>Subir imagen</span>
             </div>
           </div>
@@ -198,7 +206,7 @@ const ModalPublicacion = ({ visible, cerrarModal, enviarPeticion }) => {
             <button onClick={cancelarPublicacion}>Cancelar</button>
             <button onClick={subirPublicacion}>Aceptar</button>
           </div>
-          <input type="file" multiple accept="image/*" required onChange={capturarFile} hidden ref={referenciaFile} />
+          <input type="file" accept="image/*" required onChange={capturarFile} hidden ref={referenciaFile} />
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>
@@ -206,13 +214,13 @@ const ModalPublicacion = ({ visible, cerrarModal, enviarPeticion }) => {
 };
 
 
-const PopUp = ({cargando, respuesta}) => {
+const PopUp = ({ cargando, respuesta }) => {
 
   return (
     <motion.div className="advise flex-center"
-      initial={{right: "-50%"}}
-      animate={{right: "2%"}}
-      exit={{right: "-50%"}}
+      initial={{ right: "-50%" }}
+      animate={{ right: "2%" }}
+      exit={{ right: "-50%" }}
     >
       {
         cargando && <span>Cargando...</span>
@@ -220,7 +228,7 @@ const PopUp = ({cargando, respuesta}) => {
       {
         (!cargando && respuesta) && <span>Se añadio correctamente!</span>
       }
-      
+
     </motion.div>
   )
 }
