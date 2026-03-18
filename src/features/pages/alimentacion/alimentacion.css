@@ -27,11 +27,11 @@
 .alimentacion-objetivos .boton-seleccion.seleccionado {
     background-color: black;
     border: 1px solid #ccc;
-}          
+}
 
 .agregar-alimentacion {
     min-width: 200px;
-    margin: auto;
+    margin: 5% auto;
     border: 1px dotted #cccccc9d;
     border-radius: 5px;
     background-color: transparent;
@@ -58,15 +58,17 @@
     padding: 10px;
     color: goldenrod;
     font-size: clamp(18px, 2vw, 24px);
-    text-shadow: 1px 1px 0px  rgba(250, 87, 23, 0.918);
+    text-shadow: 1px 1px 0px rgba(250, 87, 23, 0.918);
 }
 
 .form-agregar-alimentacion {
-    width: 90%;
-    height: 85%;
+    width: 80%;
+    height: 50%;
     margin: auto;
     overflow: scroll;
-    padding: 5px 0;
+    padding: 5p 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
 }
 
 .form-agregar-alimentacion-botones {
@@ -123,24 +125,7 @@
     flex-direction: column;
 }
 
-.form-agregar-alimentacion-descripcion textarea {
-    resize: none;
-    height: 70px;
-    border: none;
-    border-bottom: 1px solid #ffffff83;
-    outline-style: none;
-    background-color: transparent;
-    padding: 4px;
-    color: white;
-}
 
-.form-agregar-alimentacion-descripcion textarea:focus,
-.form-agregar-alimentacion-descripcion select:focus {
-    border-bottom: 1px solid #ffffff;
-    border-left: 1px dotted #ffffff83;
-    border-right: 1px dotted #ffffff83;
-    border-top: 1px dotted #ffffff83;
-}
 
 .form-agregar-alimentacion-macros {
     display: flex;
@@ -156,41 +141,31 @@
     justify-content: space-around;
     flex-wrap: wrap;
     overflow: scroll;
-    margin-top: 5% ;
+    margin-top: 5%;
 }
 
 .tarjeta-alimentacion {
     position: relative;
-    border-radius: 5px 5px 0 0;
-    margin: 5% 2%;
     width: 90%;
     max-width: 250px;
     display: flex;
-    justify-content: center;
-    height: 300px;
     cursor: pointer;
 }
 
-.tarjeta-alimentacion img {
-    box-shadow: 0px -4px 0px 3px #fff;
-    height: 50%;
-    object-fit: cover;
-    border-radius: inherit;
-    width: 100%;
+.tarjeta-informacion {
+    width: calc(100% + 20px);
+    bottom: 0;
+    border-radius: 8px;
+    background-color: #29292907;
+    border: 1px solid white;
+    padding: 12px;
+    pointer-events: none;
 }
 
-.tarjeta-informacion {
-    position: absolute;
-    height: 50%;
-    width: calc(100% + 20px);
-    border: 1px solid rgba(255, 255, 255, 0.336);
-    bottom: 0;
-    border-radius: 4px;
-    background-color: #29292907;
-    overflow: scroll;
-    box-shadow: 0px 0px 0px 2px #fff;
-    padding: 8px 12px;
-    pointer-events: none;
+.tarjeta-informacion p {
+    padding: 0px !important;
+    font-size: 14px;
+    line-height: 1.5;
 }
 
 .tarjeta-informacion span {
@@ -207,14 +182,17 @@
 .modal-alimentacion {
     position: fixed;
     top: 0;
-    z-index: 1000000000;
+    left: 0;
+    z-index: 2;
     height: 100%;
     background-color: #000000c0;
     overscroll-behavior: contain;
     width: 100%;
+    backdrop-filter: blur(2px);
 }
 
 .close-modal {
+    z-index: 3;
     position: absolute;
     right: 5%;
     top: 3%;
@@ -222,16 +200,26 @@
 }
 
 .modal-alimentacion-contenido {
-    width: 80%;
     position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    max-width: 400px;
     background-color: black;
-    border: 1px solid #ffffff83;
     border-radius: 5px;
     font-size: clamp(14px, 1vw, 16px);
+}
+
+.modal-alimentacion-contenido.agregar-plan {
+    position: relative !important;
+    top: 0;
+    left: 0;
+    border: 1px solid #ffffff39;
+    height: 80%;
+    padding: 12px;
+    max-width: 600px;
+    width: 90%;
 }
 
 .modal-alimentacion-titulo {
@@ -263,4 +251,112 @@
     height: 100%;
     padding: 40px 20px;
     overflow: scroll;
+}
+
+/* ------------------ */
+
+.grid-container {
+    display: grid;
+    width: 95%;
+    gap: 8px;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas: 
+        "objetivo carbohidratos"
+        "grasas grasas"
+        "descripcion descripcion" 
+    ;
+    place-items: center;
+}
+
+.objetivo, .carbohidratos, .grasas {
+    width: 100%;
+}
+
+.objetivo {
+    grid-area: objetivo;
+}
+
+.carbohidratos {
+    grid-area: carbohidratos;
+}
+
+.grasas {
+    grid-area: grasas;
+}
+
+.descripcion {
+    grid-area: descripcion;
+    width: 80%;
+}
+
+.descripcion textarea {
+    width: 100%;
+    background-color: black;
+    resize: none;
+    color: white;
+    height: 100px;
+}
+
+
+/* Responsive */
+@media (max-width: 768px) {
+    .grid-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Componente option Dropper */
+
+.drop-menu {
+    position: relative;
+    border: 1px solid white;
+    border-radius: 3px;
+}
+
+.drop-menu-title {
+    display: flex;
+}
+
+label {
+    color: white;
+}
+
+.drop-menu-title button {
+    flex-grow: 1;
+    background-color: black;
+    color: white;
+}
+
+.drop-menu-text {
+    cursor: pointer;
+}
+
+.drop-menu-context {
+    position: absolute;
+    width: 100%;
+    height: 0%;
+    border-radius: 3px;
+    top: 100%;
+    overflow: hidden;
+    transition: height .8s ease;
+    z-index: 10;
+}
+
+.drop-menu-context button {
+    display: block;
+    width: 100%;
+    padding: 8px 4px;
+    transition: background-color 1s,
+    color .5s;
+}
+
+.drop-menu-context button:hover {
+    background-color: black;
+    color: white;
+}
+
+.drop-shown {
+    color: white;
+    height: 200px;
+    max-height: max-content;
 }

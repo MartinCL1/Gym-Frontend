@@ -1,6 +1,6 @@
 import "./member.css";
 import CardInformation from "../../../shared/cardInformation/CardInformation";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { usePost } from "../../../hooks/usePost";
 import { Dialog } from "radix-ui";
 import { AnimatePresence, motion } from 'motion/react'
@@ -10,8 +10,9 @@ import { anadirPublicacion } from "../../../../store/publicacionesSlice/publicac
 import useGetPublicaciones from "../../../hooks/Publicaciones/useGetPublicaciones";
 import { v4 as uuidv4 } from 'uuid'
 import { crearPublicacion, guardarImagenBackend, subirImagen, } from "../../../services/imagekit.services";
+import WarningForm from "../../../shared/ui/WarningForm";
 
-const MemberLayout = () => {
+const MemberLayout = React.memo(() => {
   const [mostrarModalPublicacion, setMostrarModalPublicacion] = useState(false);
   const { cargando: postCargando, respuesta } = usePost(false);
   const [visibilidadToast, setVisibilidadToast] = useState(false)
@@ -65,7 +66,7 @@ const MemberLayout = () => {
       />
     </div>
   );
-};
+}) ;
 
 // !? Modal para mostrar en la creacion de una nueva publicacion.
 //! Se debe de cambiar por un archivo unico.
@@ -184,7 +185,7 @@ const ModalPublicacion = ({ visible, cerrarModal}) => {
           } */}
           <AnimatePresence>
             {
-              warning && <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1, top: "2%" }} exit={{ opacity: 0, top: "0%" }} className="modal-warning"> LLena todos los campos </motion.div>
+              warning && <WarningForm />
             }
           </AnimatePresence>
           <Dialog.Title className="modal-titulo">Crea tu publicacion</Dialog.Title>

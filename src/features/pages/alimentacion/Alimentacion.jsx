@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import "./alimentacion.css";
 import ModalAlimentacion from "./ModalAlimentacion/ModalAlimentacion";
-import { Plus, X } from "lucide-react";
+import { ChevronDown, Plus, Star, X } from "lucide-react";
+import { AnimatePresence } from "motion/react";
+import WarningForm from "../../../shared/ui/WarningForm";
 
 const Alimentacion = () => {
   const [filtro, setFiltro] = useState([]);
@@ -24,6 +26,8 @@ const Alimentacion = () => {
   const alimentacion = [
     {
       id: 1,
+      autor: "Martin Cox",
+      calificacion: "1 estrella",
       objetivo: "Bajar grasa",
       descripcion:
         "Déficit calórico moderado enfocado en conservar masa muscular.",
@@ -50,6 +54,8 @@ const Alimentacion = () => {
     },
     {
       id: 3,
+      autor: "Martin Cox",
+      calificacion: "1 estrella",
       objetivo: "Ganar masa muscular",
       descripcion: "Superávit calórico enfocado en el crecimiento muscular.",
       macros: {
@@ -76,6 +82,8 @@ const Alimentacion = () => {
     },
     {
       id: "mantenimiento",
+      autor: "Martin Cox",
+      calificacion: "1 estrella",
       objetivo: "Mantenimiento",
       descripcion: "Equilibrio entre las calorías consumidas y gastadas.",
       macros: {
@@ -142,7 +150,6 @@ const Alimentacion = () => {
       {
         esModalAgregarAlimentacionVisible && <ModalAgregarAlimentacion closeModalAgregarAlimentacion={closeModalAgregarAlimentacion} />
       }
-
       <button className="agregar-alimentacion flex-center" onClick={() => setModalAgregarAlimentacionVisible(true)}>
         <span>Agregar Plan</span>
         <Plus width={15} />
@@ -153,6 +160,7 @@ const Alimentacion = () => {
 
 const ModalAgregarAlimentacion = ({ closeModalAgregarAlimentacion }) => {
 
+  const [warningForm, setWarningForm] = useState(false)
   const [planAlimentacion, setPlanAlimentacion] = useState({
     objetivo: "",
     descripcion: "",
@@ -163,28 +171,135 @@ const ModalAgregarAlimentacion = ({ closeModalAgregarAlimentacion }) => {
 
   const actualizarDatosAlimentacion = (ev) => {
     const opcion = ev.target
-
+    setWarningForm(false)
     setPlanAlimentacion({
       ...planAlimentacion,
       [opcion.name]: opcion.value
     })
-
-    console.log(planAlimentacion)
   }
 
+
+  const almacenarPlan = async () => {
+    if (!comprobarCampos()) return setWarningForm(true)
+
+    const rsp = await fetch('http://localhost:3500/alimentacion', {
+      method: "POST",
+      credentials: "include",
+      body: JSON.stringify(planAlimentacion),
+      headers: { "Content-Type": "application/json" }
+    })
+
+    closeModalAgregarAlimentacion()
+    const respAlimentacion = await rsp.json()
+  }
+
+  const comprobarCampos = () => {
+    if (!planAlimentacion.carbohidratos ||
+      !planAlimentacion.descripcion ||
+      !planAlimentacion.grasas ||
+      !planAlimentacion.objetivo ||
+      !planAlimentacion.proteina
+    ) {
+      return false
+    }
+    return true
+  }
+
+  const objetivoOpciones = {
+    0: { id: 0, valor: "Selecciona una Opcion" },
+    1: { id: 1, valor: "Bajar Grasa" },
+    2: { id: 2, valor: "Ganar Masa Muscular" },
+    3: { id: 3, valor: "Mantenimiento" }
+  }
+
+  const carbohidratos = {
+    0: { id: 0, valor: "Selecciona una Opcion" },
+    1: { id: 1, valor: "Bajo" },
+    2: { id: 2, valor: "Medio" },
+    3: { id: 3, valor: "Alto" }
+  }
+
+  const grasas = {
+    0: {id: 0, valor: "Selecciona una opcion"},
+    1: { id: 1, valor: "Bajo" },
+    2: { id: 2, valor: "Medio" },
+    3: { id: 3, valor: "Alto" }
+  }
+
+  const recomendaciones = []
+
+  const comidas = []
+
   return (
-    <section className="modal-alimentacion">
+    <section className="modal-alimentacion flex-center">
       <X className="close-modal" width={29} height={29} onClick={closeModalAgregarAlimentacion} />
-      <div className="modal-alimentacion-contenido">
+      <div className="modal-alimentacion-contenido agregar-plan">
+        <AnimatePresence>
+          {warningForm && <WarningForm />}
+        </AnimatePresence>
         <span className="modal-alimentacion-agregar-titulo">Agregar Plan</span>
 
-        <div className="form-agregar-alimentacion">
-          <div className="form-agregar-alimentacion-objetivo">
-            <label>Objetivo: </label>
-            <select name="objetivo" id="" onChange={actualizarDatosAlimentacion}>
-              <option value="Mantenimiento">Mantenimiento</option>
-              <option value="Bajar grasa">Bajar grasa</option>
-              <option value="Ganar masa muscular">Ganar masa muscular</option>
+        <div class="grid-container">
+          <div className="objetivo">
+            <label htmlFor="">Objetivo: </label>
+            <DropMenu opciones={objetivoOpciones} />
+          </div>
+          <div className="carbohidratos">
+            <label htmlFor="">Carbohidratos</label>
+            <DropMenu opciones={carbohidratos} />
+          </div>
+          <div className="grasas">
+            <label htmlFor="">Grasas</label>
+            <DropMenu opciones={grasas} />
+          </div>
+
+          <div className="descripcion">
+            <textarea name="" id=""></textarea>
+          </div>
+        </div>
+        {/* <div className="form-agregar-alimentacion">
+          <div>
+            <div className="form-agregar-alimentacion-objetivo">
+              <label>Objetivo: </label>
+              <select name="objetivo" id="" onChange={actualizarDatosAlimentacion}>
+                <option value="" disabled selected>Selecciona una opcion</option>
+                <option value="Mantenimiento">Mantenimiento</option>
+                <option value="Bajar grasa">Bajar grasa</option>
+                <option value="Ganar masa muscular">Ganar masa muscular</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="form-agregar-alimentacion-macros">
+            <label>Proteina: </label>
+            <select name="proteina" id="" onChange={actualizarDatosAlimentacion}>
+              <option value="" disabled selected>Selecciona una opcion</option>
+              <option value="baja">Baja</option>
+              <option value="medio">Medio</option>
+              <option value="media alta">Media Alta</option>
+              <option value="alta">Alta</option>
+            </select>
+          </div>
+
+          <div className="form-agregar-alimentacion-macros">
+            <label>Carbohidratos: </label>
+            <select name="carbohidratos" id="" onChange={actualizarDatosAlimentacion}>
+              <option value="" disabled selected>Selecciona una opcion</option>
+              <option value="baja">Baja</option>
+              <option value="medio">Medio</option>
+              <option value="media alta">Media Alta</option>
+              <option value="alta">Alta</option>
+            </select>
+          </div>
+
+          <div className="form-agregar-alimentacion-macros">
+            <label>Grasas: </label>
+            <select name="grasas" id="" onChange={actualizarDatosAlimentacion}>
+              <option value="" disabled selected>Selecciona una opcion</option>
+              <option value="baja">Baja</option>
+              <option value="medio">Medio</option>
+              <option value="media alta">Media Alta</option>
+              <option value="alta">Alta</option>
             </select>
           </div>
 
@@ -192,43 +307,17 @@ const ModalAgregarAlimentacion = ({ closeModalAgregarAlimentacion }) => {
             <label >Descripcion: </label>
             <textarea name="descripcion" onChange={actualizarDatosAlimentacion} />
           </div>
-
-          <div className="form-agregar-alimentacion-macros">
-            <span>Nutrientes: </span>
-            <label>Proteina: </label>
-            <select name="proteina" id="" onChange={actualizarDatosAlimentacion}>
-              <option value="baja">Baja</option>
-              <option value="medio">Medio</option>
-              <option value="media alta">Media Alta</option>
-              <option value="alta">Alta</option>
-            </select>
-            <label>Carbohidratos: </label>
-            <select name="carbohidratos" id="" onChange={actualizarDatosAlimentacion}>
-              <option value="baja">Baja</option>
-              <option value="medio">Medio</option>
-              <option value="media alta">Media Alta</option>
-              <option value="alta">Alta</option>
-            </select>
-            <label>Grasas: </label>
-            <select name="grasas" id="" onChange={actualizarDatosAlimentacion}>
-              <option value="baja">Baja</option>
-              <option value="medio">Medio</option>
-              <option value="media alta">Media Alta</option>
-              <option value="alta">Alta</option>
-            </select>
-          </div>
         </div>
+        </div> */}
+
         <div className="form-agregar-alimentacion-botones flex-center">
           <button onClick={closeModalAgregarAlimentacion}>Cerrar</button>
-          <button>Aceptar</button>
+          <button onClick={almacenarPlan}>Aceptar</button>
         </div>
       </div>
     </section>
   )
 }
-
-
-
 
 const BotonSelector = ({ text, agregarFiltro }) => {
   const [seleccionado, setSeleccionado] = useState(false);
@@ -255,16 +344,45 @@ const AlimentacionCards = ({ planAlimenticio, accion }) => {
 
   return (
     <div className="tarjeta-alimentacion" onClick={seleccionarAlimento}>
-      <img
-        src="https://plus.unsplash.com/premium_photo-1675798983878-604c09f6d154?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-        alt="Verduras"
-      />
       <div className="tarjeta-informacion">
-        <span>Descripcion: </span>
-        <p>{planAlimenticio.descripcion}</p>
+        <span>{planAlimenticio.objetivo} </span>
+        <p>{planAlimenticio.autor}</p>
+        <p><Star stroke="orange" width={18} /><Star stroke="orange" width={18} /><Star stroke="orange" width={18} /><Star stroke="orange" width={18} /><Star stroke="orange" width={18} /> </p>
       </div>
     </div>
   );
 };
 
 export default Alimentacion;
+
+// Componente Para la Seleccion.
+
+const DropMenu = ({ opciones }) => {
+  const [mostrardDrop, setMostrarDrop] = useState(false);
+  const [valor, setValor] = useState(0)
+
+  const cambiarValor = (ev) => {
+    const valorEvento = ev?.target.value
+    setValor(opciones[valorEvento].valor)
+  }
+
+  useLayoutEffect(() => {
+    setValor(opciones[0].valor)
+  }, [])
+
+  return (
+    <div className="drop-menu">
+      <div className="drop-menu-title">
+        <button className="drop-menu-text" onClick={() => setMostrarDrop(!mostrardDrop)}>{valor}</button>
+        <ChevronDown className="drop-menu-text" onClick={() => setMostrarDrop(!mostrardDrop)} />
+      </div>
+      <div className={`drop-menu-context ${mostrardDrop ? "drop-shown" : ""}`}>
+        {
+          Object.values(opciones).map((item) => (
+            <button onClick={cambiarValor} value={item.id}>{item.valor}</button>
+          ))
+        }
+      </div>
+    </div>
+  )
+}

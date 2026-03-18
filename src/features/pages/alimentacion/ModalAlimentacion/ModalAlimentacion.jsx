@@ -45,7 +45,7 @@ const ModalAlimentacion = ({ alimentacion, accion }) => {
           ))}
 
           <span className="alimentacion-contenido-titulo">
-            Recomendaciones:{" "}
+            Comidas:
           </span>
           {Object.keys(alimentacion.comidas).map((data) => (
             <div key={data}>
