@@ -258,12 +258,13 @@
 .grid-container {
     display: grid;
     width: 95%;
-    gap: 8px;
+    gap: 16px;
     grid-template-columns: repeat(2, 1fr);
     grid-template-areas: 
         "objetivo carbohidratos"
         "grasas grasas"
         "descripcion descripcion" 
+        "comidas comidas"
     ;
     place-items: center;
 }
@@ -282,11 +283,18 @@
 
 .grasas {
     grid-area: grasas;
+    max-width: 380px;
+    width: 100%;
 }
 
 .descripcion {
     grid-area: descripcion;
-    width: 80%;
+    max-width: 380px;
+    width: 100%;
+}
+
+.comidas {
+    grid-area: comidas;
 }
 
 .descripcion textarea {
@@ -295,13 +303,52 @@
     resize: none;
     color: white;
     height: 100px;
+    border-radius: 4px;
+    padding: 4px;
 }
 
 
+
+.comidas input {
+    padding: 8px 4px;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid white;
+    color: white;
+}
+
+.contenedor-comidas {
+    display: flex;
+    gap: 10px;
+}
+
+.comidas button {
+    padding: 4px 8px;
+    border-radius: 5px;
+    background-color: transparent;
+    color: white;
+    transition: background-color .5s;
+}
+
+.comidas button:hover {
+    background-color: rgba(128, 128, 128, 0.173);
+}
+
+.lista-comidas {
+    display: flex;
+}
+
 /* Responsive */
-@media (max-width: 768px) {
+@media (max-width: 420px) {
     .grid-container {
         grid-template-columns: 1fr;
+        grid-template-areas: 
+        "objetivo"
+        "carbohidratos"
+        "grasas"
+        "descripcion"
+        "comidas";
+        flex-direction: column;
     }
 }
 

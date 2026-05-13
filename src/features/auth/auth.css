@@ -54,17 +54,16 @@
   width: 100%;
   border: none;
   color: white;
-  font-size: clamp(15px, 1vw, 18px);
+  font-size: small;
   outline-style: none;
   border-bottom: 1px solid #fff;
   background-color: transparent;
   padding: 4px 35px 4px 4px;
-  font-weight: 100;
-}
+} 
 
 .login-form--content-input label {
   padding: 0 35px 2px 4px;
-  font-size: small;
+  font-size: medium;
 }
 
 .icon {

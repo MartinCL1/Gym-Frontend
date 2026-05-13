@@ -227,7 +227,6 @@ const ModalAgregarAlimentacion = ({ closeModalAgregarAlimentacion }) => {
   }
 
   const recomendaciones = []
-
   const comidas = []
 
   return (
@@ -254,13 +253,21 @@ const ModalAgregarAlimentacion = ({ closeModalAgregarAlimentacion }) => {
           </div>
 
           <div className="descripcion">
+            <label htmlFor="">Recomendacion: </label>
             <textarea name="" id=""></textarea>
           </div>
+
+          <div className="comidas">
+              <input type="text" placeholder="Comida" />
+              <button>Agregar</button>
+          </div>
+
+      
         </div>
         {/* <div className="form-agregar-alimentacion">
           <div>
             <div className="form-agregar-alimentacion-objetivo">
-              <label>Objetivo: </label>
+              <label>Objetivo: </label> 
               <select name="objetivo" id="" onChange={actualizarDatosAlimentacion}>
                 <option value="" disabled selected>Selecciona una opcion</option>
                 <option value="Mantenimiento">Mantenimiento</option>
@@ -273,7 +280,7 @@ const ModalAgregarAlimentacion = ({ closeModalAgregarAlimentacion }) => {
           <div className="form-agregar-alimentacion-macros">
             <label>Proteina: </label>
             <select name="proteina" id="" onChange={actualizarDatosAlimentacion}>
-              <option value="" disabled selected>Selecciona una opcion</option>
+              <option value="" disabled selected>Seleccio na una opcion</option>
               <option value="baja">Baja</option>
               <option value="medio">Medio</option>
               <option value="media alta">Media Alta</option>
