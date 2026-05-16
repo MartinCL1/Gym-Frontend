@@ -1,0 +1,254 @@
+.profile-image {
+  width: 100%;
+  padding: 8px;
+  min-width: 250px;
+  height: max-content;
+  gap: 12px;
+  color: white;
+  flex-direction: column;
+}
+
+hr {
+  width: 80%;
+  max-width: 300px;
+  margin: auto;
+}
+
+.profile-avatar {
+  position: relative;
+  width: 30%;
+  max-width: 75px;
+}
+
+.profile-avatar img {
+  width: 100%;
+  border-radius: 50%;
+}
+
+.profile-information {
+  flex-direction: column;
+}
+
+.profile-information span {
+  text-transform: capitalize;
+}
+
+.profile-information p {
+  font-weight: 200;
+}
+
+/* 
+  Necesitamos cambiar estos estilos, se tienen que agregar a la seccion principal 
+  Porque practicamente no son del perfil sino de la seccion principal
+*/
+
+.perfil {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(5, 1fr);  
+  width: 100%;
+  height: 100vh;
+  padding: 54px 25px;
+  overflow: scroll;
+  grid-column: 1 / 5;
+}
+
+.perfil-wrapper {
+  grid-column: 1 / 6;
+  display: flex;
+  flex-direction: column;
+  background-color: #0b0b0b54;
+  width: 100%;
+  height: 200px;
+  box-shadow: 3px 5px 3px #00000091;
+  border: 1px solid #131313;
+  padding: 16px;
+  border-radius: 4px;
+}
+
+.perfil-banner {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.perfil-banner h2 {
+  text-transform: capitalize;
+}
+
+.perfil-banner img {
+  display: flex;
+  border: 1px solid rgba(255, 255, 255, 0.377);
+  width: 15%;
+  min-width: 100px;
+  max-width: max-content;
+  aspect-ratio: 1 / 1;
+  border-radius: 100%;
+  object-fit: cover;
+}
+
+.perfil-banner-informacion {
+  padding: 24px 16px;
+  color: white;
+  width: 100%;
+}
+
+.perfil-banner-informacion h2 {
+  color: rgb(240, 240, 240);
+  font-size: clamp(18px, 2vw, 25px);
+  font-weight: 550;
+}
+
+.perfil-banner p {
+  padding-top: 12px;
+  width: 50%;
+  font-size: clamp(12px, 1vw, 16px);
+}
+
+.perfil button {
+  display: flex;
+  margin-left: auto;
+  padding: 8px;
+  border-radius: 4px;
+  background-color: transparent;
+  border: 1px solid #8f8f8f83;
+  font-weight: thin;
+  color: white;
+  font-size: clamp(5px, 2vw, 12px);
+  transition: .5s border-color ease-in-out;
+}
+
+
+.opciones {
+  padding: 14px 0;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.opciones button:hover {
+  border-color: white;
+}
+
+.opciones button {
+  margin: 0;
+}
+
+/* Estilos para el componente lista de amigos*/
+.lista-amigos {
+  grid-column: 1 / 3;
+  display: flex;
+  flex-direction: column;
+  gap: 12px; 
+  width: 100%;
+  color: white;
+  text-shadow: 2px 2px 1px black;
+}
+
+.lista-amigos h2 {
+  text-align: center;   
+}
+
+/* Estilos de la tarjeta amigo */
+.tarjeta-amigo {
+  display: flex;
+  width: 100%;
+  gap: 12px;
+  background-color: #0b0b0b54;
+  align-items: center;
+  box-shadow: 1px 2px 4px black;
+  border: 1px solid #20202071;
+  border-radius: 5px;
+  padding: 8px;
+}
+
+.tarjeta-amigo h3 {
+  font-weight: 400;
+  color: #ccc;
+}
+
+.mas-amigos {
+  cursor: pointer;
+  width: 100%;
+  gap: 5px;
+  border-radius: 5px;
+}
+
+.tarjeta-amigo img {
+  width: 15%;
+  min-width: 35px;
+  object-fit: 1 / 1;
+  border-radius: 5px;
+}
+
+.tarjeta-amigo-descripcion {
+  flex-grow: 1;
+  height: 100%;
+}
+
+.tarjeta-amigo-descripcion p {
+  font-size: clamp(12px, 1vw, 16px);
+}
+
+.dashboard {
+  grid-column: 3 / 6;
+  height: 100%;
+  margin: 8% 0;
+}
+
+
+.dashboard-container {
+  width: 100%;
+  height: 200px;
+  color: white;
+}
+
+.dashboard-container h2 {
+  font-weight: 400;
+  text-align: center;
+}
+
+@media (width < 1024px) {
+  .lista-amigos {
+    grid-column: 1 / 6;
+  }
+
+  .dashboard {
+    grid-column: 1 / 6;
+  }
+
+  .mas-amigos {
+    max-width: 300px;
+    width: 90%;
+    margin: auto;
+  }
+  
+}
+
+@media (width < 700px) {
+  .perfil {
+    grid-column: 1 / 6;
+  }
+
+  .dashboard {
+    grid-column: 1 / 6;
+  }
+
+  .perfil-wrapper {
+    width: 100%;
+    max-width: none;
+    grid-column: 1 / 6;
+  }
+  
+  .lista-amigos {
+    grid-column: 1 / 6;
+    height: 50vh;
+  }
+
+  .opciones.opciones-tarjeta-amigo {
+    width: 50%;
+    min-width: 150px;
+  }
+
+}
+

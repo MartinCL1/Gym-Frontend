@@ -1,0 +1,9 @@
+.principal {
+    position: relative;
+    display: grid;
+    height: 100vh;
+    width: 100vw;
+    background-color: #161616;
+    overflow: hidden;
+    grid-template-columns: repeat(5, 1fr);
+}

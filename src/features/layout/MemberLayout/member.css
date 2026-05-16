@@ -1,0 +1,251 @@
+.member-wrapper {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  display: flex;
+  grid-column: 1 / 5;
+  padding: 54px 0px 25px !important;
+}
+
+.member-wrapper-content {
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  gap: 14px;
+}
+
+.member-opciones {
+  position: absolute;
+  top: 12px;
+  overflow: hidden;
+  left: 12px;
+  min-width: 200px;
+  max-width: 500px;
+}
+
+.member-opciones button {
+  padding: 10px ;
+  border: 1px solid white;
+  border-radius: 5px;
+  background-color: transparent;
+  color: white;
+  font-weight: 700;
+  letter-spacing: .3px; 
+}
+
+.member-opciones button:hover {
+  background-color: white;
+  color: black;
+}
+
+
+@media (width <= 740px) {
+
+  .member-wrapper {
+    grid-column: 1 / 6;
+  }
+
+  .member-wrapper-profile {
+    position: absolute;
+    width: 100%;
+    flex-grow: 0;
+    left: 100%;
+    transition: left .5s ease-in-out;
+  }
+  
+  .member-wrapper-content {
+    width: 100% !important;
+  }
+}
+
+
+
+/*
+! Estilos de modal publicacion, se debe de mover a su archivo correspondiente.
+*/
+
+.modal-overlay {
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.699);
+  inset: 0;
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+}
+
+.modal-contenido {
+  outline-style: none;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 400px;
+  height: 50%;
+  min-height: max-content;
+  border: 1px solid #ffffff27;
+  border-radius: 5px;
+  background-color: #070707;
+  flex-direction: column; 
+  gap: 1em;
+  padding: 10px 0;
+}
+
+.modal-warning {
+  position: absolute;
+  top: 0;
+  background-color: crimson;
+  padding: 5px;
+  border-radius: 5px;
+  color: white;
+}
+
+
+.contenido-principal {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.modal-titulo {
+  text-align: center;
+  width: 100%;
+}
+
+.modal-titulo-publicacion,
+.modal-descripcion-publicacion,
+.modal-imagen-publicacion {
+  width: 90%;
+  max-width: 300px;
+}
+
+.modal-contenido input {
+  background-color: transparent;
+  border: none;
+  color: white;
+  border-bottom: 1px solid #ffffff4d;
+  width: 100%;
+  outline-style: none;
+  padding: 8px 4px;
+}
+
+.modal-contenido input:placeholder{
+  color: #cccccc8a;
+}
+
+.modal-contenido input:focus {
+  border-bottom: 1px solid white;
+}
+
+.modal-contenido textarea {
+  outline-style: none;
+  width: 100%;
+  padding: 8px 4px;
+  max-width: 300px;
+  min-height: 125px;
+  background-color:transparent;
+  border: 1px solid #ffffff4d;
+  border-radius: 5px;
+  color: white;
+  resize: none;
+}
+
+.modal-contenido textarea:focus {
+  border: 1px solid rgb(255, 255, 255);
+}
+
+.modal-contenido input::placeholder {
+  color: #ccc;
+}
+
+.modal-titulo {
+  color: white;
+}
+
+.modal-imagen-publicacion {
+  width: 90%;
+  max-width: 300px;
+  border: 1px dotted #ffffff4d;
+  padding: 10px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  border-radius: 5px;
+  position: relative;
+}
+
+.modal-imagen-publicacion:hover {
+  border-color: white;
+  cursor: pointer;
+}
+
+.badge-modal-imagen {
+  position: absolute;
+  left: calc(100% - 15px);
+  bottom: calc(100% - 15px);
+  /* left: 95%;
+  top: 70%; */
+  padding: 10px;
+  border-radius: 50%;
+  height: 15px;
+  width: 15px;
+  background-color: black;
+  border: 1px solid rgba(255, 255, 255, 0.586);
+  text-align: center;
+}
+
+.modal-imagen-publicacion,
+.modal-descripcion-publicacion textarea,
+.modal-titulo-publicacion input {
+  transition: border .5s ease-in-out;
+}
+
+.modal-botones {
+  width: 90%;
+  max-width: 300px;
+  justify-content: space-between;
+}
+
+.modal-botones button {
+  padding: 8px 32px;
+  border: 1px solid #ffffff4d;
+  background-color: transparent;
+  border-radius: 5px;
+  color: white;
+  transition: border .5s ease-in-out;
+}
+
+.modal-botones button:hover {
+  border: 1px solid white;
+}
+
+.modal-imagen-vista-previa {
+  display: flex;
+  width: 90%;
+  overflow: hidden;
+  white-space: nowrap;
+  gap: 10px;
+  justify-content: space-around ;
+}
+
+/* Toast styles */
+
+.advise {
+  border: 1px solid rgba(255, 255, 255, 0.267);
+  width: 250px;
+  position: fixed;
+  border-radius: 8px;
+  box-shadow: 2px 4px 5px black;
+  bottom: 4%;
+  right: 2%;
+  height: 50px;
+  background-color: rgb(24, 23, 23);
+  color: white;
+}
