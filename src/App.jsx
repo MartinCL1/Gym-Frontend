@@ -8,7 +8,7 @@ import Alimentacion from "./features/pages/alimentacion/Alimentacion";
 
 function App() {
   return (
-    <section>
+    <section className="bg-[#151515]">
       <Routes>
         <Route element={<LoginForm />} index />
         <Route element={<Render />}>

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import "./auth.css";
 import { EyeOff, Eye, LogIn } from "lucide-react";
 import Boton from "../../shared/ui/Boton";
 import { AnimatePresence, motion } from "motion/react";
@@ -11,7 +10,6 @@ import { registrarPersona } from "../../services/registro.services";
 import OtpModal from "../modals/OtpModal";
 import { Dialog } from "radix-ui";
 import SuccessBar from "../../shared/ui/SuccessBar";
-
 
 // ! MEJORAR LA ESTRUCTURA DE ESTE COMPONENTE, ESTA DEMASIADO GRANDE Y SE PUEDE SEPARAR EN COMPONENTES MAS PEQUEÑOS. ADEMAS DE QUE HAY FUNCIONES QUE NO TIENEN NADA QUE VER CON EL LOGIN, COMO LAS FUNCIONES PARA MOSTRAR LA CONTRASENA, ESAS FUNCIONES PODRIAN ESTAR EN UN CUSTOM HOOK O EN UN COMPONENTE SEPARADO.
 const LoginForm = () => {
@@ -79,7 +77,7 @@ const LoginForm = () => {
 
   // TODO Funciones para hacer un login.
   const iniciarSesion = async () => {
-    const respuestaSesion = await fetch("http://localhost:3500/login",
+    const respuestaSesion = await fetch("https://gym-backendd.vercel.app/login",
       {
         credentials: "include",
         method: "POST",
@@ -127,28 +125,29 @@ const LoginForm = () => {
     restoreVisibility();
   };
 
-  return <section className="login-form flex-center">
-    <section className="login-form--content">
-      <section className={`wrapper-login ${showSignUp ? "left" : "no-left"}`}>
+  return <section className="flex h-screen w-screen items-center justify-center">
+    <section className="relative flex w-[95%] max-w-100 h-1/2 items-center overflow-hidden rounded-sm border border-gray-400 lg:max-w-2xl">
+      <section className={`absolute h-full w-full text-white transition-[left] duration-250 ease-in-out max-[600px]:static ${showSignUp ? "left-1/2" : "left-0"}`}>
         <AnimatePresence mode="wait">
           {!showSignUp ? (
             <motion.div
               key={"login"}
-              className="login-form--content-form"
+              className="flex h-full w-1/2 flex-col items-center justify-center will-change-[transform,opacity] max-[600px]:w-full max-[600px]:gap-0"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
             >
-              <h1 className="text-4xl">Bienvenido!</h1>
-              <span>El entrenamiento espera!</span>
-              <div className="login-form--content-input">
-                <label htmlFor="nombre_usuario">Username</label>
-                <input type="text" onChange={llenarFormUsuario} name="nombre_usuario" id="nombre_usuario" />
+              <h1 className="text-3xl">Bienvenido!</h1>
+              <span className="text-md">El entrenamiento espera!</span>
+              <div className="relative py-8 w-[90%] max-w-[250px]">
+                <label className="px-1 pb-  .5  text-base" htmlFor="nombre_usuario">Username</label>
+                <input className="w-full border-0 border-b border-white bg-transparent py-1 pr-[35px] pl-1 text-[small] text-white outline-none" type="text" onChange={llenarFormUsuario} name="nombre_usuario" id="nombre_usuario" />
               </div>
-              <div className="login-form--content-input">
-                <label htmlFor="contrasena">Password</label>
+              <div className="relative w-[90%] my-4 max-w-[250px]">
+                <label className="px-1 pb-0.5 text-base" htmlFor="contrasena">Password</label>
                 <input
+                  className="w-full border-0 border-b border-white bg-transparent py-1 pr-[35px] pl-1 text-[small] text-white outline-none"
                   type={visiblePassword.loginPassword ? "text" : "password"}
                   name="contrasena"
                   onChange={llenarFormUsuario}
@@ -156,21 +155,21 @@ const LoginForm = () => {
                 />
                 {visiblePassword.loginPassword ? (
                   <EyeOff
-                    className="icon"
+                    className="absolute right-0 bottom-0.5 w-5 cursor-pointer"
                     onClick={() => switchVisibility("loginPassword")}
                   />
                 ) : (
                   <Eye
-                    className="icon"
+                    className="absolute right-0 bottom-0.5 w-5 cursor-pointer"
                     onClick={() => switchVisibility("loginPassword")}
                   />
                 )}
               </div>
-              <div className="login-options flex-center">
+              <div className="flex flex-col pt-5 items-center justify-center gap-2">
                 <Boton Icon={LogIn} accion={iniciarSesion} text={"Ingresar"} />
                 <button
                   onClick={switchToSignUp}
-                  className="login-options--register"
+                  className="bg-transparent text-white/[0.664] hover:underline"
                 >
                   Registrarse
                 </button>
@@ -179,24 +178,25 @@ const LoginForm = () => {
           ) : (
             <motion.div
               key={"signup"}
-              className="login-form--content-form"
+              className="flex h-full w-1/2 flex-col items-center  justify-around p-4 will-change-[transform,opacity] max-[600px]:w-full"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
             >
-              <h1>Registrate</h1>
-              <div className="signup-wrapper-form">
-                <div className="login-form--content-input">
-                  <label htmlFor="correo">Correo</label>
+              <h1 className="text-3xl">Registrate</h1>
+              <div className="flex flex-col gap-4">
+                <div className="relative mt-[1em] w-[90%] max-w-62.5">
+                  <label className="px-1 pb-0.5 pr-8.75 text-base" htmlFor="correo">Correo</label>
                   <input type="text"
-                    className="font-light text-white" id="correo"
+                    className="w-full border-0 border-b border-white bg-transparent py-1 pr-[35px] pl-1 text-[small] text-white outline-none font-light" id="correo"
                     name="correo"
                     onChange={obtenerInfoRegistro} />
                 </div>
-                <div className="login-form--content-input">
-                  <label htmlFor="contrasena_registro">Contrasena</label>
+                <div className="relative mt-[1em] w-[90%] max-w-62.5">
+                  <label className="px-1 pb-0.5 pr-8.75 text-base" htmlFor="contrasena_registro">Contrasena</label>
                   <input
+                    className="w-full border-0 border-b border-white bg-transparent py-1 pr-[35px] pl-1 text-[small] text-white outline-none"
                     type={
                       visiblePassword.registerPassword ? "text" : "password"
                     }
@@ -206,19 +206,20 @@ const LoginForm = () => {
                   />
                   {visiblePassword.registerPassword ? (
                     <EyeOff
-                      className="icon"
+                      className="absolute right-0 bottom-0.5 w-5 cursor-pointer"
                       onClick={() => switchVisibility("registerPassword")}
                     />
                   ) : (
                     <Eye
-                      className="icon"
+                      className="absolute right-0 bottom-0.5 w-5 cursor-pointer"
                       onClick={() => switchVisibility("registerPassword")}
                     />
                   )}
                 </div>
-                <div className="login-form--content-input">
-                  <label htmlFor="">Confirmar Contrasena</label>
+                <div className="relative mt-[1em] w-[90%] max-w-62.5">
+                  <label className="px-1 pb-0.5 pr-8.75 text-base" htmlFor="">Confirmar Contrasena</label>
                   <input
+                    className="w-full border-0 border-b border-white bg-transparent py-1 pr-[35px] pl-1 text-[small] text-white outline-none"
                     type={
                       visiblePassword.registerPasswordConfirmation
                         ? "text"
@@ -229,14 +230,14 @@ const LoginForm = () => {
                   />
                   {visiblePassword.registerPasswordConfirmation ? (
                     <EyeOff
-                      className="icon"
+                      className="absolute right-0 bottom-0.5 w-5 cursor-pointer"
                       onClick={() =>
                         switchVisibility("registerPasswordConfirmation")
                       }
                     />
                   ) : (
                     <Eye
-                      className="icon"
+                      className="absolute right-0 bottom-0.5 w-5 cursor-pointer"
                       onClick={() =>
                         switchVisibility("registerPasswordConfirmation")
                       }
@@ -244,11 +245,11 @@ const LoginForm = () => {
                   )}
                 </div>
               </div>
-              <div className="login-options flex-center">
+              <div className="m-auto flex flex-col flex-wrap items-center justify-center gap-2">
                 <Boton Icon={LogIn} text={"Registrar"} accion={enviarRegistro} />
                 <button
                   onClick={switchToSignUp}
-                  className="login-options--register"
+                  className="bg-transparent text-white/[0.664] hover:underline"
                 >
                   Inicar Sesion
                 </button>
@@ -260,7 +261,7 @@ const LoginForm = () => {
       <img
         src="https://cdn.pixabay.com/photo/2016/11/29/09/10/man-1868632_1280.jpg"
         alt="gym-cover"
-        className={`login-cover--register ${showSignUp ? "right" : "no-right"
+        className={`absolute h-full w-1/2 object-cover object-center transition-[right] duration-[250ms] ease-out max-[600px]:hidden ${showSignUp ? "right-1/2" : "right-0"
           }`}
       />
     </section>
